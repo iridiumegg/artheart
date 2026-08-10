@@ -14,7 +14,7 @@ See [DESIGN.md](DESIGN.md) for the full architecture and build phases.
 - [x] GitHub Actions workflow (schedule + Pages deploy)
 - [x] Dashboard placeholder (reads summary.json)
 - [x] 6 PM email digest (Resend, stdlib-only)
-- [ ] Polished ES2 / Recharts dashboard (Phase 3)
+- [x] Polished ES2 dashboard (self-contained, inline-SVG charts)
 
 See [docs/SETUP.md](docs/SETUP.md) for going live.
 

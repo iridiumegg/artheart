@@ -4,109 +4,304 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>artheart — Gallery Conditions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0d1117; --panel:#161b22; --line:#232b36; --ink:#e6edf3;
-    --muted:#8b98a5; --teal:#2dd4bf; --teal-dim:#134e4a;
-    --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
-    --mono:"DejaVu Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --bg:#0b1120; --surface:#0f1928; --card:#111d35; --elevated:#16243f; --overlay:#1c2e4a;
+    --teal:#3dd6c8; --teal-bright:#5ce8db; --teal-dim:rgba(61,214,200,.12);
+    --blue:#4fa3e0; --blue-dim:rgba(79,163,224,.12);
+    --ink:#ffffff; --sec:#8baec8; --muted:#4d6a85;
+    --border:rgba(61,214,200,.20); --subtle:rgba(255,255,255,.07);
+    --warning:#f0a830; --error:#e05656; --error-dim:rgba(224,86,86,.14);
+    --sans:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --mono:"Space Mono","DejaVu Sans Mono",ui-monospace,monospace;
+    --r-lg:10px; --r-md:6px;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-       font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
-  header{padding:28px 24px 8px;border-bottom:1px solid var(--line)}
-  h1{margin:0;font-size:22px;letter-spacing:.5px}
-  h1 span{color:var(--teal)}
-  .sub{color:var(--muted);font-size:13px;margin-top:4px;font-family:var(--mono)}
-  main{max-width:1100px;margin:0 auto;padding:24px}
-  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px}
-  .tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .tile .k{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
-  .tile .v{font-size:30px;font-weight:600;margin-top:6px;font-family:var(--mono)}
-  .tile.alert .v{color:var(--bad)}
-  .tile.good .v{color:var(--ok)}
-  section h2{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);
-             border-bottom:1px solid var(--line);padding-bottom:8px}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
-  td.mono{font-family:var(--mono)}
-  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-family:var(--mono)}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+    background-image:radial-gradient(rgba(61,214,200,.05) 1px,transparent 1px);
+    background-size:24px 24px;}
+  a{color:var(--teal)}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px}
+  /* Topbar */
+  .top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    border-bottom:1px solid var(--subtle);padding-bottom:18px;margin-bottom:22px}
+  .brand{font-size:24px;font-weight:800;letter-spacing:-.5px}
+  .brand b{color:var(--teal)}
+  .brand small{display:block;font-size:12px;font-weight:400;color:var(--sec);
+    letter-spacing:.3px;margin-top:2px}
+  .spacer{flex:1}
+  .facility{font-family:var(--mono);font-size:12px;color:var(--sec);
+    text-transform:uppercase;letter-spacing:1px;text-align:right}
+  select{background:var(--elevated);color:var(--ink);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:9px 12px;font-family:var(--mono);font-size:13px;cursor:pointer}
+  /* Cards */
+  .card{background:var(--card);border:1px solid var(--subtle);border-radius:var(--r-lg);
+    padding:18px;box-shadow:0 4px 20px rgba(0,0,0,.5);transition:box-shadow .18s ease,border-color .18s ease}
+  .card:hover{box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 24px rgba(61,214,200,.15)}
+  .label{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--sec);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .label::before{content:"";width:16px;height:2px;background:var(--teal);display:inline-block}
+  /* KPI tiles */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+  .kpi{background:var(--card);border:1px solid var(--subtle);border-radius:var(--r-lg);padding:18px}
+  .kpi .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sec)}
+  .kpi .v{font-family:var(--mono);font-size:34px;font-weight:700;margin-top:8px;line-height:1}
+  .kpi .u{font-size:15px;color:var(--muted)}
+  .kpi.alert .v{color:var(--error)} .kpi.good .v{color:var(--teal)}
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:20px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+  /* zone card internals */
+  .zhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
+  .zname{font-family:var(--mono);font-weight:700;font-size:16px}
+  .pill{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:999px}
   .pill.ok{background:var(--teal-dim);color:var(--teal)}
-  .pill.bad{background:#3b1113;color:#fca5a5}
-  .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
-  .bar>i{display:block;height:100%;background:var(--teal)}
-  .exc{background:#1b1113;border:1px solid #3b1113;border-radius:10px;padding:12px 14px;margin:6px 0;
-       font-family:var(--mono);font-size:13px;color:#fca5a5}
-  .empty{color:var(--muted);font-family:var(--mono);padding:14px 0}
-  footer{color:var(--muted);font-size:12px;text-align:center;padding:24px;font-family:var(--mono)}
+  .pill.bad{background:var(--error-dim);color:#f2a3a3}
+  .metric{display:flex;align-items:center;gap:10px;margin:10px 0 2px}
+  .metric .dot{width:9px;height:9px;border-radius:50%}
+  .metric .mv{font-family:var(--mono);font-size:20px;font-weight:700}
+  .metric .ml{font-size:11px;color:var(--sec);text-transform:uppercase;letter-spacing:.5px}
+  .metric .adh{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--sec)}
+  svg .grid{stroke:var(--subtle);stroke-width:1}
+  svg .axis{fill:var(--muted);font-family:var(--mono);font-size:10px}
+  svg .band{fill:rgba(61,214,200,.07)}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--sec);font-family:var(--mono);margin-bottom:6px}
+  .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .exc{background:#160f14;border:1px solid #3b1113;border-radius:var(--r-md);padding:10px 12px;
+    margin:8px 0;color:#f2a3a3;font-family:var(--mono);font-size:13px;display:flex;gap:10px;align-items:center}
+  .exc b{color:#ffd0d0}
+  .clean{color:var(--teal);font-family:var(--mono);font-size:14px;padding:10px 0}
+  .note{color:var(--muted);font-family:var(--mono);font-size:11px;margin-top:8px}
+  details{margin-top:16px} summary{cursor:pointer;color:var(--sec);font-family:var(--mono);font-size:12px}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+  table.tbl th,table.tbl td{padding:7px 8px;border-bottom:1px solid var(--subtle);text-align:left;font-family:var(--mono)}
+  table.tbl th{color:var(--muted);font-size:11px;text-transform:uppercase}
+  footer{color:var(--muted);font-family:var(--mono);font-size:11px;text-align:center;padding:26px 0}
+  #tip{position:fixed;pointer-events:none;opacity:0;transition:opacity .1s;background:var(--overlay);
+    border:1px solid var(--border);border-radius:var(--r-md);padding:7px 10px;font-family:var(--mono);
+    font-size:12px;color:var(--ink);box-shadow:0 8px 40px rgba(0,0,0,.6);z-index:50;white-space:nowrap}
+  .empty{padding:60px 20px;text-align:center;color:var(--sec);font-family:var(--mono)}
 </style>
 </head>
 <body>
-<header>
-  <h1>art<span>heart</span> — Gallery Conditions</h1>
-  <div class="sub" id="datestamp">loading…</div>
-</header>
-<main>
-  <div class="tiles" id="tiles"></div>
-  <section>
-    <h2>Excursions <span style="text-transform:none;letter-spacing:0">(temp 68–72 °F · RH 45–55 %)</span></h2>
-    <div id="excursions"></div>
-  </section>
-  <section style="margin-top:26px">
-    <h2>Zones (by AHU)</h2>
-    <table>
-      <thead><tr>
-        <th>AHU</th><th>Temp °F (latest)</th><th>RH % (latest)</th>
-        <th>Temp adherence</th><th>RH adherence</th><th>Status</th>
-      </tr></thead>
-      <tbody id="rows"></tbody>
-    </table>
-  </section>
-</main>
-<footer>artheart · CBMAA gallery-condition aggregator · <span id="foot"></span></footer>
+<div id="tip"></div>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">art<b>heart</b><small>Gallery Condition Intelligence</small></div>
+    <div class="spacer"></div>
+    <div class="facility" id="facility">—</div>
+    <select id="datesel" aria-label="Select day"></select>
+  </div>
+  <div id="app"><div class="empty">Loading…</div></div>
+  <footer>artheart · automated gallery-condition aggregator · <span id="foot"></span></footer>
+</div>
 <script>
-const fmt=(v,u="")=>v==null?"—":v+u;
-function bar(pct){const p=pct==null?0:pct;return `<div class="bar"><i style="width:${p}%"></i></div>`+
-  `<div class="mono" style="font-size:12px;color:var(--muted);margin-top:3px">${fmt(pct,"%")}</div>`;}
+const C={teal:"#3dd6c8",blue:"#4fa3e0",error:"#e05656",muted:"#4d6a85",sec:"#8baec8",ink:"#fff"};
+const tip=document.getElementById("tip");
+const fmt=(v,u="")=>v==null?"—":`${v}${u}`;
+function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;
+  const r=tip.getBoundingClientRect();let nx=x+14,ny=y-r.height-10;
+  if(nx+r.width>innerWidth)nx=x-r.width-14; if(ny<0)ny=y+16; tip.style.left=nx+"px";tip.style.top=ny+"px";}
+function hideTip(){tip.style.opacity=0;}
+function svgPt(svg,evt){const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;
+  return p.matrixTransform(svg.getScreenCTM().inverse());}
 
-fetch("./data/summary.json?"+Date.now()).then(r=>r.json()).then(d=>{
-  document.getElementById("datestamp").textContent =
-    `${d.date} · ${d.snapshot_count} snapshot(s) · ${d.zone_count} zone(s)`;
-  document.getElementById("foot").textContent = "updated "+d.date;
+let DATA=null, DATE=null;
 
-  const worst = [...d.zones].sort((a,b)=>(a.temp_adherence??100)-(b.temp_adherence??100))[0];
-  const tiles=[
-    ["Zones",d.zone_count,""],
-    ["Snapshots today",d.snapshot_count,""],
-    ["Excursions",d.excursion_count,d.excursion_count?"alert":"good"],
-    ["Lowest adherence",worst?`${worst.zone}`:"—",worst&&worst.temp_adherence<100?"alert":"good"],
-  ];
-  document.getElementById("tiles").innerHTML = tiles.map(([k,v,c])=>
-    `<div class="tile ${c}"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+fetch("./data/dashboard.json?"+Date.now()).then(r=>r.json()).then(d=>{
+  DATA=d; DATE=d.latest;
+  document.getElementById("facility").textContent=d.facility||"";
+  document.getElementById("foot").textContent="updated "+(d.latest||"");
+  const sel=document.getElementById("datesel");
+  sel.innerHTML=(d.dates||[]).slice().reverse().map(dt=>`<option value="${dt}">${dt}</option>`).join("");
+  sel.value=DATE; sel.onchange=e=>{DATE=e.target.value;render();};
+  render();
+}).catch(()=>{document.getElementById("app").innerHTML=
+  '<div class="empty">No data yet — run the pipeline to publish the first report.</div>';});
 
-  const ex=document.getElementById("excursions");
-  ex.innerHTML = d.excursions.length ? d.excursions.map(e=>{
+function render(){
+  const day=DATA.days[DATE]; if(!day){return;}
+  const zones=day.zones||[], exc=day.excursions||[];
+  const tAdh=avg(zones.map(z=>z.temp_adherence)), rAdh=avg(zones.map(z=>z.rh_adherence));
+  const overall=avg([tAdh,rAdh]);
+  const app=document.getElementById("app");
+  app.innerHTML=`
+    <div class="kpis">
+      ${kpi("Zones (AHUs)",day.zone_count,"")}
+      ${kpi("Snapshots today",day.snapshot_count,"")}
+      ${kpi("Excursions",day.excursion_count,"",day.excursion_count?"alert":"good")}
+      ${kpi("Overall adherence",overall==null?"—":overall,"%",overall!=null&&overall>=99.5?"good":(overall!=null&&overall<95?"alert":""))}
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="label">Band adherence over time</div>
+        <div class="legend"><span><i style="background:${C.teal}"></i>Temp %</span>
+        <span><i style="background:${C.blue}"></i>Humidity %</span></div>
+        <div id="trend"></div></div>
+      <div class="card"><div class="label">Gallery heatmap</div><div id="heat"></div>
+        <div class="note">Cell = % of the day's readings within band. Ring = out of band now.</div></div>
+    </div>
+    <div class="label" style="margin:4px 2px 12px">Zones — intraday snapshots vs band
+      <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">
+      (temp 68–72 °F · RH 45–55 %)</span></div>
+    <div class="zones" id="zones"></div>
+    <div class="card"><div class="label">Excursion log — ${DATE}</div><div id="exc"></div></div>
+    ${tableView(day)}
+  `;
+  drawTrend(document.getElementById("trend"));
+  drawHeat(document.getElementById("heat"),zones);
+  const zc=document.getElementById("zones");
+  zones.forEach(z=>zc.appendChild(zoneCard(z)));
+  const el=document.getElementById("exc");
+  el.innerHTML = exc.length ? exc.map(e=>{
     const u=e.metric==="temp"?"°F":"%";
-    return `<div class="exc">⚠ ${e.zone} — ${e.metric.toUpperCase()} ${e.value}${u} `+
-           `outside ${e.band_lo}–${e.band_hi}${u} · ${e.at||""}</div>`;
-  }).join("") : `<div class="empty">✓ All zones within band today.</div>`;
+    return `<div class="exc">⚠ <span><b>${e.zone}</b> — ${e.metric.toUpperCase()} `+
+      `${e.value}${u} outside ${e.band_lo}–${e.band_hi}${u}`+
+      `${e.at?` · ${e.at.replace("T"," ")}`:""}</span></div>`;}).join("")
+    : `<div class="clean">✓ All zones within band for the selected day.</div>`;
+}
 
-  document.getElementById("rows").innerHTML = d.zones.map(z=>{
-    const status = z.in_band===false
-      ? `<span class="pill bad">out of band</span>`
-      : `<span class="pill ok">in band</span>`;
-    return `<tr>
-      <td class="mono">${z.zone}</td>
-      <td class="mono">${fmt(z.temp.latest)}</td>
-      <td class="mono">${fmt(z.rh.latest)}</td>
-      <td>${bar(z.temp_adherence)}</td>
-      <td>${bar(z.rh_adherence)}</td>
-      <td>${status}</td></tr>`;
-  }).join("");
-}).catch(e=>{
-  document.getElementById("datestamp").textContent="No data yet — run the pipeline.";
-});
+const avg=a=>{const v=a.filter(x=>x!=null);return v.length?Math.round(v.reduce((s,x)=>s+x,0)/v.length*10)/10:null;};
+function kpi(k,v,u,cls=""){return `<div class="kpi ${cls}"><div class="k">${k}</div>
+  <div class="v">${v}<span class="u">${u}</span></div></div>`;}
+
+/* ---- per-zone card with two sparklines ---- */
+function zoneCard(z){
+  const el=document.createElement("div"); el.className="card";
+  const bad=z.in_band===false;
+  el.innerHTML=`<div class="zhead"><span class="zname">${z.zone}</span>
+    <span class="pill ${bad?"bad":"ok"}">${bad?"OUT OF BAND":"IN BAND"}</span></div>
+    <div class="metric"><span class="dot" style="background:${C.teal}"></span>
+      <span class="mv">${fmt(z.temp.latest)}</span><span class="ml">°F temp</span>
+      <span class="adh">${fmt(z.temp_adherence,"%")} in band</span></div>
+    <div class="sp" data-k="temp"></div>
+    <div class="metric"><span class="dot" style="background:${C.blue}"></span>
+      <span class="mv">${fmt(z.rh.latest)}</span><span class="ml">% humidity</span>
+      <span class="adh">${fmt(z.rh_adherence,"%")} in band</span></div>
+    <div class="sp" data-k="rh"></div>`;
+  el.querySelectorAll(".sp").forEach(s=>{
+    const k=s.dataset.k;
+    spark(s, k==="temp"?z.temp_series:z.rh_series, k==="temp"?z.temp_band:z.rh_band,
+          k==="temp"?C.teal:C.blue, k==="temp"?"°F":"%", z.zone);
+  });
+  return el;
+}
+function spark(host,series,band,color,unit,zone){
+  const W=300,H=76,PL=30,PR=10,PT=10,PB=16, iw=W-PL-PR, ih=H-PT-PB;
+  const pts=series.map((p,i)=>({...p,i})).filter(p=>p.value!=null);
+  const vals=pts.map(p=>p.value);
+  let lo=Math.min(band[0],...(vals.length?vals:[band[0]]))-1;
+  let hi=Math.max(band[1],...(vals.length?vals:[band[1]]))+1;
+  if(hi-lo<2){lo-=1;hi+=1;}
+  const n=series.length;
+  const X=i=>PL+(n<=1?iw/2:iw*i/(n-1));
+  const Y=v=>PT+ih-ih*(v-lo)/(hi-lo);
+  const by0=Y(band[1]),by1=Y(band[0]);
+  const line=pts.map((p,k)=>`${k?"L":"M"}${X(p.i).toFixed(1)},${Y(p.value).toFixed(1)}`).join(" ");
+  const dots=pts.map(p=>{const out=p.value<band[0]||p.value>band[1];
+    return `<circle cx="${X(p.i).toFixed(1)}" cy="${Y(p.value).toFixed(1)}" r="4"
+      fill="${out?C.error:color}" stroke="var(--card)" stroke-width="1.5"
+      data-v="${p.value}" data-at="${p.at||""}" data-out="${out?1:0}"/>`;}).join("");
+  host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">
+    <rect class="band" x="${PL}" y="${by0.toFixed(1)}" width="${iw}" height="${(by1-by0).toFixed(1)}"/>
+    <line class="grid" x1="${PL}" y1="${by0.toFixed(1)}" x2="${PL+iw}" y2="${by0.toFixed(1)}"/>
+    <line class="grid" x1="${PL}" y1="${by1.toFixed(1)}" x2="${PL+iw}" y2="${by1.toFixed(1)}"/>
+    <text class="axis" x="4" y="${by0+3}">${band[1]}</text>
+    <text class="axis" x="4" y="${by1+3}">${band[0]}</text>
+    ${pts.length>1?`<path d="${line}" fill="none" stroke="${color}" stroke-width="2"
+       stroke-linejoin="round" stroke-linecap="round"/>`:""}
+    ${dots}</svg>`;
+  const svg=host.querySelector("svg");
+  svg.querySelectorAll("circle").forEach(c=>{
+    c.style.cursor="pointer";
+    c.onmouseenter=e=>{const out=c.dataset.out==="1";
+      showTip(`<b>${zone}</b> · ${c.dataset.at.replace("T"," ")}<br>${c.dataset.v}${unit}`+
+        (out?` <span style="color:${C.error}">out of band</span>`:""),e.clientX,e.clientY);};
+    c.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY);
+    c.onmouseleave=hideTip;
+  });
+}
+
+/* ---- adherence over time (two series, one axis 0–100) ---- */
+function drawTrend(host){
+  const dates=DATA.dates||[];
+  const T=dates.map(d=>({d,v:avg((DATA.days[d].zones||[]).map(z=>z.temp_adherence))}));
+  const R=dates.map(d=>({d,v:avg((DATA.days[d].zones||[]).map(z=>z.rh_adherence))}));
+  const W=560,H=220,PL=34,PR=48,PT=14,PB=28, iw=W-PL-PR, ih=H-PT-PB;
+  const n=dates.length;
+  const X=i=>PL+(n<=1?iw/2:iw*i/(n-1));
+  const lo=Math.min(90,...[...T,...R].map(p=>p.v).filter(v=>v!=null),100)-2;
+  const Y=v=>PT+ih-ih*(v-lo)/(100-lo);
+  const mkPath=A=>A.map((p,i)=>p.v==null?null:`${i&&A[i-1].v!=null?"L":"M"}${X(i).toFixed(1)},${Y(p.v).toFixed(1)}`)
+    .filter(Boolean).join(" ");
+  const mkDots=(A,col)=>A.map((p,i)=>p.v==null?"":`<circle cx="${X(i).toFixed(1)}" cy="${Y(p.v).toFixed(1)}"
+    r="${p.d===DATE?5:3.5}" fill="${col}" stroke="var(--card)" stroke-width="1.5"
+    data-d="${p.d}" data-v="${p.v}" data-m="${col===C.teal?'Temp':'Humidity'}"/>`).join("");
+  const yticks=[lo,(lo+100)/2,100].map(v=>`<line class="grid" x1="${PL}" y1="${Y(v).toFixed(1)}"
+    x2="${PL+iw}" y2="${Y(v).toFixed(1)}"/><text class="axis" x="4" y="${(Y(v)+3).toFixed(1)}">${Math.round(v)}</text>`).join("");
+  const sel=dates.indexOf(DATE);
+  const selMark=sel>=0?`<line x1="${X(sel).toFixed(1)}" y1="${PT}" x2="${X(sel).toFixed(1)}" y2="${PT+ih}"
+    stroke="${C.muted}" stroke-dasharray="3 3"/>`:"";
+  const endLbl=(A,col)=>{for(let i=A.length-1;i>=0;i--)if(A[i].v!=null)
+    return `<text x="${(X(i)+6).toFixed(1)}" y="${(Y(A[i].v)+3).toFixed(1)}" fill="${col}"
+      font-family="var(--mono)" font-size="11">${A[i].v}%</text>`;return"";};
+  host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">
+    ${yticks}${selMark}
+    ${n>1?`<path d="${mkPath(T)}" fill="none" stroke="${C.teal}" stroke-width="2" stroke-linejoin="round"/>
+    <path d="${mkPath(R)}" fill="none" stroke="${C.blue}" stroke-width="2" stroke-linejoin="round"/>`:""}
+    ${mkDots(T,C.teal)}${mkDots(R,C.blue)}${endLbl(T,C.teal)}${endLbl(R,C.blue)}
+    <text class="axis" x="${PL}" y="${H-8}">${dates[0]||""}</text>
+    <text class="axis" x="${PL+iw}" y="${H-8}" text-anchor="end">${dates[n-1]||""}</text>
+  </svg>${n<=1?'<div class="note">History builds as more days are collected — one day so far.</div>':""}`;
+  const svg=host.querySelector("svg");
+  svg.querySelectorAll("circle").forEach(c=>{c.style.cursor="pointer";
+    c.onmouseenter=e=>showTip(`<b>${c.dataset.m}</b> · ${c.dataset.d}<br>${c.dataset.v}% in band`,e.clientX,e.clientY);
+    c.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY); c.onmouseleave=hideTip;
+    c.onclick=()=>{if(DATA.days[c.dataset.d]){DATE=c.dataset.d;
+      document.getElementById("datesel").value=DATE;render();}};});
+}
+
+/* ---- heatmap: zones × [Temp,RH], sequential teal by adherence ---- */
+function drawHeat(host,zones){
+  const cols=["Temp","RH"], cw=120, ch=26, gap=4, LX=60, TY=22;
+  const W=LX+cols.length*(cw+gap), H=TY+zones.length*(ch+gap)+6;
+  const ramp=p=>{ // 0..100 -> dim..teal ; null -> muted
+    if(p==null)return "rgba(77,106,133,.25)";
+    const t=Math.max(0,Math.min(1,(p-80)/20)); // emphasize 80-100
+    const a=(.12+t*.78).toFixed(2); return `rgba(61,214,200,${a})`;};
+  let cells="";
+  cols.forEach((c,ci)=>{cells+=`<text class="axis" x="${LX+ci*(cw+gap)+cw/2}" y="14" text-anchor="middle">${c}</text>`;});
+  zones.forEach((z,zi)=>{
+    const y=TY+zi*(ch+gap);
+    cells+=`<text class="axis" x="0" y="${y+ch/2+3}">${z.zone}</text>`;
+    [["Temp",z.temp_adherence,z.in_band],["RH",z.rh_adherence,z.in_band]].forEach((m,ci)=>{
+      const x=LX+ci*(cw+gap), out=ci===0?(z.temp.latest!=null&&(z.temp.latest<z.temp_band[0]||z.temp.latest>z.temp_band[1]))
+        :(z.rh.latest!=null&&(z.rh.latest<z.rh_band[0]||z.rh.latest>z.rh_band[1]));
+      cells+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="4" fill="${ramp(m[1])}"
+        stroke="${out?C.error:'transparent'}" stroke-width="${out?2:0}"
+        data-z="${z.zone}" data-m="${m[0]}" data-p="${m[1]==null?'—':m[1]}" style="cursor:pointer"/>
+        <text x="${x+cw/2}" y="${y+ch/2+4}" text-anchor="middle" font-family="var(--mono)"
+          font-size="11" fill="#eaf6f4">${m[1]==null?'—':m[1]+'%'}</text>`;
+    });
+  });
+  host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${cells}</svg>`;
+  host.querySelectorAll("rect").forEach(r=>{
+    r.onmouseenter=e=>showTip(`<b>${r.dataset.z}</b> · ${r.dataset.m}<br>${r.dataset.p}% in band`,e.clientX,e.clientY);
+    r.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY); r.onmouseleave=hideTip;});
+}
+
+/* ---- accessible table view ---- */
+function tableView(day){
+  const rows=(day.zones||[]).map(z=>`<tr><td>${z.zone}</td><td>${fmt(z.temp.latest)}</td>
+    <td>${fmt(z.rh.latest)}</td><td>${fmt(z.temp_adherence,"%")}</td>
+    <td>${fmt(z.rh_adherence,"%")}</td><td>${z.in_band===false?"OUT":"in band"}</td></tr>`).join("");
+  return `<details><summary>Show data table (${DATE})</summary>
+    <table class="tbl"><thead><tr><th>AHU</th><th>Temp °F</th><th>RH %</th>
+    <th>Temp adh.</th><th>RH adh.</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></details>`;
+}
 </script>
 </body>
 </html>

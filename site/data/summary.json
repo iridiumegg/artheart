@@ -32,6 +32,18 @@
       ],
       "temp_adherence": 100.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 69.0
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 53.8
+        }
+      ],
       "in_band": true
     },
     {
@@ -59,6 +71,18 @@
       ],
       "temp_adherence": 100.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 69.5
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 48.7
+        }
+      ],
       "in_band": true
     },
     {
@@ -86,6 +110,18 @@
       ],
       "temp_adherence": 100.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 71.4
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 52.1
+        }
+      ],
       "in_band": true
     },
     {
@@ -113,6 +149,18 @@
       ],
       "temp_adherence": 0.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 72.2
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 52.8
+        }
+      ],
       "in_band": false
     },
     {
@@ -140,6 +188,18 @@
       ],
       "temp_adherence": 100.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 70.2
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 47.4
+        }
+      ],
       "in_band": true
     },
     {
@@ -167,6 +227,18 @@
       ],
       "temp_adherence": 100.0,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 71.5
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 49.7
+        }
+      ],
       "in_band": true
     },
     {
@@ -194,6 +266,18 @@
       ],
       "temp_adherence": null,
       "rh_adherence": 100.0,
+      "temp_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": null
+        }
+      ],
+      "rh_series": [
+        {
+          "at": "2026-08-10T11:00:20",
+          "value": 48.9
+        }
+      ],
       "in_band": true
     }
   ],

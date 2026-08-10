@@ -53,3 +53,20 @@ def test_other_days_excluded():
     summ = aggregate.daily_summary(s, "2026-08-11")
     assert summ["snapshot_count"] == 0
     assert summ["zones"] == []
+
+
+def test_intraday_series_present():
+    summ = aggregate.daily_summary(_store_two_snapshots(), "2026-08-10")
+    ahu2 = summ["zones"][0]
+    assert [p["value"] for p in ahu2["temp_series"]] == [70.0, 70.5]
+    assert [p["value"] for p in ahu2["rh_series"]] == [50.0, 44.0]
+
+
+def test_build_dashboard():
+    s = _store_two_snapshots()
+    dash = aggregate.build_dashboard(s)
+    assert dash["dates"] == ["2026-08-10"]
+    assert dash["latest"] == "2026-08-10"
+    assert dash["temp_band"] == [68.0, 72.0]
+    assert "2026-08-10" in dash["days"]
+    assert dash["days"]["2026-08-10"]["zone_count"] == 2

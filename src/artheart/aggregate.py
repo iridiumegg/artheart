@@ -78,6 +78,11 @@ def daily_summary(store: dict[str, Any], date_str: str) -> dict[str, Any]:
             "rh_band": list(rh_band),
             "temp_adherence": _adherence(temp_ok),
             "rh_adherence": _adherence(rh_ok),
+            # Intraday snapshot points for the sparklines (nulls kept for gaps).
+            "temp_series": [{"at": t, "value": v}
+                            for t, v in zip(data["ts"], data["temp"])],
+            "rh_series": [{"at": t, "value": v}
+                          for t, v in zip(data["ts"], data["rh"])],
             "in_band": (temp_ok[-1] is not False) and (rh_ok[-1] is not False)
             if temp_ok or rh_ok else None,
         })
@@ -90,6 +95,37 @@ def daily_summary(store: dict[str, Any], date_str: str) -> dict[str, Any]:
         "excursion_count": len(excursions),
         "zones": zones_out,
         "excursions": excursions,
+    }
+
+
+def all_dates(store: dict[str, Any]) -> list[str]:
+    """Sorted unique calendar dates present in the store."""
+    dates = {
+        (r.get("generated_at") or "")[:10]
+        for r in store.get("reports", []) if r.get("generated_at")
+    }
+    return sorted(d for d in dates if d)
+
+
+def facility_of(store: dict[str, Any]) -> str:
+    """First segment of the location path, e.g. 'Crystal Bridges Museum'."""
+    for r in store.get("reports", []):
+        path = r.get("location_path") or ""
+        if path:
+            return path.split("/")[0].strip()
+    return "Gallery Conditions"
+
+
+def build_dashboard(store: dict[str, Any]) -> dict[str, Any]:
+    """Everything the static dashboard renders: facility, bands, all daily rollups."""
+    dates = all_dates(store)
+    return {
+        "facility": facility_of(store),
+        "temp_band": list(config.DEFAULT_TEMP_BAND),
+        "rh_band": list(config.DEFAULT_RH_BAND),
+        "dates": dates,
+        "latest": dates[-1] if dates else None,
+        "days": {d: daily_summary(store, d) for d in dates},
     }
 
 

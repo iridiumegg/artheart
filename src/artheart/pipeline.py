@@ -44,8 +44,11 @@ def run(*, do_ingest: bool = True) -> dict:
 
     os.makedirs(config.SITE_DATA_DIR, exist_ok=True)
     _write_json(os.path.join(config.SITE_DATA_DIR, "summary.json"), summary)
-    shutil.copyfile(config.DATA_FILE, os.path.join(config.SITE_DATA_DIR, "readings.json")) \
-        if os.path.exists(config.DATA_FILE) else None
+    _write_json(os.path.join(config.SITE_DATA_DIR, "dashboard.json"),
+                aggregate.build_dashboard(data))
+    if os.path.exists(config.DATA_FILE):
+        shutil.copyfile(config.DATA_FILE,
+                        os.path.join(config.SITE_DATA_DIR, "readings.json"))
     print(f"summary: {today} -> {summary['snapshot_count']} snapshot(s), "
           f"{summary['zone_count']} zone(s), {summary['excursion_count']} excursion(s)")
 

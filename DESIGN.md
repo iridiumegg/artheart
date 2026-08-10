@@ -36,9 +36,12 @@ Facts that shape the whole design:
 
 ## 2. Hierarchy & data model
 
+**Each AHU is a gallery.** Label galleries by AHU number ("AHU 2", "AHU 13", …).
+A single report lists every AHU; ~3 reports/day = the same set of AHUs sampled 3×.
+
 ```
-Gallery (a report: title + location path)
-  └── Zone (an AHU: "AHU 2")
+Report (a snapshot: generated_at + all AHUs)
+  └── Zone / Gallery (an AHU: "AHU 2")
         └── Reading (metric, value, ts) captured each snapshot
 ```
 
@@ -61,34 +64,44 @@ recomputed if bands change.
 
 Museum art-preservation defaults (tunable per zone in `zones`):
 
-| Metric | Default band | Notes |
-|--------|--------------|-------|
-| Temp   | 68–74 °F     | AAM/ASHRAE museum guidance, adjust per gallery |
-| RH     | 45–55 %      | Tight band protects mixed-media collections |
+| Metric | Band       | Notes |
+|--------|------------|-------|
+| Temp   | 68–72 °F   | CBMAA target (confirmed) |
+| RH     | 45–55 %    | CBMAA target (confirmed) |
 
-Set real bands per zone before launch — Nate to confirm CBMAA's actual envelopes.
+Bands are stored per zone so any gallery can be tuned later; the values above
+are the confirmed defaults. (In the sample report, AHU 13 at 72.2 °F is one
+derived temp excursion.)
 
-## 3. Architecture / data flow
+## 3. Architecture / data flow — GitHub-native
+
+At this volume (7 AHUs × ~3/day ≈ 21 rows/day, ~8k/year) no database or paid
+host is needed. Everything but the auth gate lives in GitHub.
 
 ```
-Gmail (Workspace) ─(poll ~10m)─▶ Ingestor ─▶ PDF Parser ─▶ Postgres
-   PDF reports                       │                         │
-                                     └─▶ Object storage        │
-                                         (raw PDFs)            ▼
-              18:00 America/Chicago cron ─▶ Aggregator ─▶ Dashboard (web)
-                                                │              ▲
-                                                └─▶ Email out ─┘
-                                                    link + snapshot + stats
+Gmail (Workspace)                          GitHub repo
+   PDF reports                     ┌───────────────────────────────┐
+        │                          │  data/readings.json  (storage)│
+        ▼                          │  data/pdfs/          (raw PDF) │
+  GitHub Actions (scheduled) ──────┤  site/  (static dashboard src)│
+   fetch → parse → append          └───────────────────────────────┘
+        │  build → deploy → email                │ deploy
+        ├────────────────────────▶ Email digest  ▼
+        │   (Resend) link+stats    Cloudflare Pages + Access  ◀── me & staff
+        │                          (or GitHub Pages)   gated, interactive
 ```
+
+One Actions run ~18:15 America/Chicago: fetch the day's report emails → parse →
+append to `readings.json` → rebuild the static dashboard → deploy → email digest.
+Optional midday run keeps the page fresh earlier.
 
 ### Components
 
-**1. Ingestion — Gmail → app**
-- Google Workspace **service account with domain-wide delegation** reads the
-  target mailbox. Avoids interactive OAuth token-refresh failure that kills
-  unattended services.
-- **Poll every ~10 min** for messages matching a label/sender filter. Upgrade
-  to **Gmail push (watch → Pub/Sub)** later for near-real-time.
+**1. Ingestion — Gmail → Actions**
+- Google Workspace **service account with domain-wide delegation** (creds stored
+  as an Actions secret) reads the target mailbox. No interactive OAuth to refresh.
+- Scheduled workflow fetches messages matching a label/sender filter; a per-day
+  run is enough given the ~3/day cadence (no tight polling needed).
 - Dedup on `gmail_msg_id` so re-runs never double-count.
 
 **2. PDF parser — DONE / validated** (`src/artheart/parser.py`)
@@ -96,10 +109,11 @@ Gmail (Workspace) ─(poll ~10m)─▶ Ingestor ─▶ PDF Parser ─▶ Postgre
 - Splits `"53.8 @ 08/10/2026 09:14:55 AM"` into value + timestamp; parses temp;
   tolerates blank cells; pulls title, location path, generated-at/by.
 - Emits `parse_confidence` so bad parses surface instead of corrupting charts.
-- Raw PDF archived to object storage.
+- Raw PDF archived into the repo (or a Release).
 
-**3. Storage — Postgres.** Plain Postgres is ample at this volume; add
-TimescaleDB only if history grows large.
+**3. Storage — a committed data file.** `data/readings.json` (or SQLite),
+versioned in git — diffable, free, trivially backed up. Postgres only if history
+outgrows a flat file (years away at this rate).
 
 **4. Aggregator + dashboard — the "beautiful, chart-heavy" part**
 - **Next.js + Recharts**, styled to the **ES2 dark tech aesthetic** (teal
@@ -112,28 +126,32 @@ TimescaleDB only if history grows large.
   - **Excursion log** (derived) with severity
   - **Gallery heatmap** (zone × metric, green→red vs band)
 
-**5. Email out — 18:00 America/Chicago**
-- Platform cron → aggregate the day → send via **Resend** (or Postmark).
+**5. Email out — 18:15 America/Chicago**
+- A step in the Actions run → send via **Resend** (or Postmark).
 - Email = headline stats + **static snapshot image** of the key chart +
   **link to the live dashboard**. Useful at a glance, rich on click.
 
 **6. Access control — "me and staff"**
-- Data isn't public. **Google SSO restricted to the CBMAA/ES2 domain** for the
-  dashboard; email links carry a signed token. Decide before launch.
+- Plain **GitHub Pages is public** — no built-in gate unless on GitHub
+  Enterprise Cloud (private Pages).
+- **Recommended:** deploy the static build to **Cloudflare Pages + Cloudflare
+  Access** (free for ≤50 users) for real email / Google-SSO login. Keep code,
+  Actions, and data in GitHub; only the front door moves to Cloudflare.
+- Alternatives: GitHub Enterprise Cloud private Pages; Netlify Identity.
 
-**7. Hosting.** One platform — **Render** or **Railway** (web service +
-managed Postgres + cron in one place, minimal ops). Fly.io if more control wanted.
+**7. Hosting.** GitHub Actions (compute/schedule) + GitHub repo (storage) +
+**Cloudflare Pages/Access** (gated dashboard). ~$0, near-zero ops.
 
 ## 4. Recommended stack
 
 | Layer        | Choice |
 |--------------|--------|
 | Ingest/parse/aggregate/email | Python (pdfplumber, google-api-python-client, Resend) |
-| Storage      | Postgres |
-| Object store | S3-compatible (raw PDFs) |
-| Dashboard    | Next.js + Recharts, ES2 dark theme |
-| Scheduler    | Platform cron @ 18:00 America/Chicago |
-| Hosting      | Render or Railway |
+| Storage      | Committed `data/readings.json` (or SQLite) in the repo |
+| Raw PDFs     | Committed to repo (or GitHub Release) |
+| Dashboard    | Static site (Recharts), ES2 dark theme, client-side interactive |
+| Scheduler    | GitHub Actions scheduled workflow @ 18:15 America/Chicago |
+| Hosting      | GitHub Actions + repo; Cloudflare Pages + Access for the gated site |
 
 ## 5. Build phases
 
@@ -145,10 +163,19 @@ managed Postgres + cron in one place, minimal ops). Fly.io if more control wante
 4. **Polish:** push notifications, excursion alerting, multi-gallery rollups,
    long-range trends.
 
-## 6. Open questions
+## 6. Decisions & open questions
 
-1. **3 reports/day = 3 galleries once each, or one gallery 3×/day?**
-   (Sets whether the dashboard's primary axis is *gallery* or *time-of-day*.)
-2. **Real target bands per gallery/zone** (defaults above are placeholders).
-3. **Dashboard access**: Google SSO domain-restricted OK? Which domain(s)?
-4. **Retention**: how long to keep raw PDFs and readings history?
+Resolved:
+- **AHU = gallery**, labeled by AHU number. One report lists all AHUs, ~3×/day.
+- **Bands: 68–72 °F, 45–55 % RH.**
+- **Hosting on GitHub** (Actions + repo data + static dashboard), gated via
+  Cloudflare Pages/Access for "me and staff".
+
+Still open:
+1. **Cloudflare Pages + Access** acceptable for the auth gate, or is GitHub
+   Enterprise Cloud (private Pages) already available? Which email domain(s)
+   for the allowed users?
+2. **Retention**: how long to keep raw PDFs and readings history? (git keeps
+   everything by default — fine unless you want a cap.)
+3. **Which Gmail label/sender/subject** identifies the report emails (for the
+   ingest filter)?

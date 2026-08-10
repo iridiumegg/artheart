@@ -31,6 +31,11 @@ def test_readings():
     assert ahu19.rh == 48.9
 
 
-def test_no_excursions_in_sample():
+def test_excursions_against_real_bands():
+    # Temp band 68-72F, RH 45-55%. AHU 13 reads 72.2F -> one temp excursion.
     r = parse_report(SAMPLE)
-    assert find_excursions(r) == []
+    exc = find_excursions(r)
+    assert exc == [
+        {"zone": "AHU 13", "metric": "temp", "value": 72.2,
+         "band_lo": 68.0, "band_hi": 72.0}
+    ]

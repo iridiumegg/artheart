@@ -129,7 +129,7 @@ def _confidence(report: Report) -> float:
     return round(score, 2)
 
 
-def find_excursions(report: Report, temp_band=(68.0, 74.0), rh_band=(45.0, 55.0)):
+def find_excursions(report: Report, temp_band=(68.0, 72.0), rh_band=(45.0, 55.0)):
     """Derive out-of-band events (no alarm data exists in the report itself).
 
     Bands are placeholders; real per-zone bands live in the `zones` table.

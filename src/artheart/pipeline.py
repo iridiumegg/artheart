@@ -49,14 +49,19 @@ def run(*, do_ingest: bool = True) -> dict:
     print(f"summary: {today} -> {summary['snapshot_count']} snapshot(s), "
           f"{summary['zone_count']} zone(s), {summary['excursion_count']} excursion(s)")
 
-    # Phase 2: email digest around 6pm local. Guarded until wired up.
-    if os.environ.get("RESEND_API_KEY") and _local_hour() == config.SEND_HOUR:
+    # Email digest around 6pm local (or forced for a manual test run).
+    should_email = os.environ.get("RESEND_API_KEY") and (
+        config.FORCE_EMAIL or _local_hour() == config.SEND_HOUR
+    )
+    if should_email:
         try:
             from . import email_digest
             email_digest.send(summary)
             print("email: digest sent")
         except Exception as exc:  # never let email failure fail the build
             print(f"email: skipped ({exc})")
+    else:
+        print("email: not this run (outside send hour / no key)")
 
     return summary
 

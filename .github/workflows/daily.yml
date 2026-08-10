@@ -33,6 +33,8 @@ jobs:
           ARTHEART_GMAIL_USER: ${{ secrets.ARTHEART_GMAIL_USER }}
           ARTHEART_GMAIL_QUERY: ${{ vars.ARTHEART_GMAIL_QUERY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ARTHEART_EMAIL_FROM: ${{ vars.ARTHEART_EMAIL_FROM }}
+          ARTHEART_EMAIL_TO: ${{ vars.ARTHEART_EMAIL_TO }}
           ARTHEART_DASHBOARD_URL: ${{ vars.ARTHEART_DASHBOARD_URL }}
         run: python -m artheart.pipeline
       - name: Commit updated readings

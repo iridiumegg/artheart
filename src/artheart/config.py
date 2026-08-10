@@ -30,6 +30,10 @@ SITE_DATA_DIR = os.environ.get("ARTHEART_SITE_DATA", "site/data")
 
 # --- Dashboard / email --------------------------------------------------------
 DASHBOARD_URL = os.environ.get("ARTHEART_DASHBOARD_URL", "")
+EMAIL_FROM = os.environ.get("ARTHEART_EMAIL_FROM", "")   # verified Resend sender
+EMAIL_TO = os.environ.get("ARTHEART_EMAIL_TO", "")       # comma-separated
+# Bypass the "only at SEND_HOUR" guard (for manual test runs).
+FORCE_EMAIL = os.environ.get("ARTHEART_FORCE_EMAIL", "").lower() in ("1", "true", "yes")
 
 
 def band_for_zone(zone: str) -> tuple[tuple[float, float], tuple[float, float]]:

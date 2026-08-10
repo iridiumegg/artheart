@@ -13,7 +13,7 @@ See [DESIGN.md](DESIGN.md) for the full architecture and build phases.
 - [x] Gmail ingestor (service account) — needs credentials to run live
 - [x] GitHub Actions workflow (schedule + Pages deploy)
 - [x] Dashboard placeholder (reads summary.json)
-- [ ] 6 PM email digest (Phase 2)
+- [x] 6 PM email digest (Resend, stdlib-only)
 - [ ] Polished ES2 / Recharts dashboard (Phase 3)
 
 See [docs/SETUP.md](docs/SETUP.md) for going live.

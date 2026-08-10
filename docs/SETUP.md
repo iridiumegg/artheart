@@ -35,7 +35,20 @@ Variables:
 | Name | Value |
 |------|-------|
 | `ARTHEART_GMAIL_QUERY` | Gmail search that selects report emails — **TODO confirm**, e.g. `subject:CBMAA has:attachment filename:pdf` |
-| `ARTHEART_DASHBOARD_URL` | the Pages URL, once known |
+| `ARTHEART_DASHBOARD_URL` | the Pages URL, once known (e.g. `https://iridiumegg.github.io/artheart/`) |
+| `ARTHEART_EMAIL_FROM` | verified Resend sender, e.g. `artheart <reports@yourdomain.com>` |
+| `ARTHEART_EMAIL_TO` | recipient(s), comma-separated, e.g. `nstewart@es2built.com` |
+
+## 2b. Email digest (Resend)
+
+1. Create a **Resend** account and **verify a sending domain** (add the DNS
+   records Resend gives you). Free tier is plenty for one daily email.
+2. Create an API key → store as the `RESEND_API_KEY` secret.
+3. Set `ARTHEART_EMAIL_FROM` / `ARTHEART_EMAIL_TO` variables above.
+
+The digest sends automatically at ~6 PM Central. To test off-hours, run the
+workflow manually with the repo/env variable `ARTHEART_FORCE_EMAIL=true`, or
+run `ARTHEART_FORCE_EMAIL=true python -m artheart.pipeline` locally.
 
 ## 3. Run it
 

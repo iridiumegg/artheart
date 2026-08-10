@@ -1,0 +1,210 @@
+{
+  "date": "2026-08-10",
+  "snapshot_count": 1,
+  "generated_at_list": [
+    "2026-08-10T11:00:20"
+  ],
+  "zone_count": 7,
+  "excursion_count": 1,
+  "zones": [
+    {
+      "zone": "AHU 2",
+      "samples": 1,
+      "temp": {
+        "min": 69.0,
+        "max": 69.0,
+        "avg": 69.0,
+        "latest": 69.0
+      },
+      "rh": {
+        "min": 53.8,
+        "max": 53.8,
+        "avg": 53.8,
+        "latest": 53.8
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 100.0,
+      "rh_adherence": 100.0,
+      "in_band": true
+    },
+    {
+      "zone": "AHU 4",
+      "samples": 1,
+      "temp": {
+        "min": 69.5,
+        "max": 69.5,
+        "avg": 69.5,
+        "latest": 69.5
+      },
+      "rh": {
+        "min": 48.7,
+        "max": 48.7,
+        "avg": 48.7,
+        "latest": 48.7
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 100.0,
+      "rh_adherence": 100.0,
+      "in_band": true
+    },
+    {
+      "zone": "AHU 8",
+      "samples": 1,
+      "temp": {
+        "min": 71.4,
+        "max": 71.4,
+        "avg": 71.4,
+        "latest": 71.4
+      },
+      "rh": {
+        "min": 52.1,
+        "max": 52.1,
+        "avg": 52.1,
+        "latest": 52.1
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 100.0,
+      "rh_adherence": 100.0,
+      "in_band": true
+    },
+    {
+      "zone": "AHU 13",
+      "samples": 1,
+      "temp": {
+        "min": 72.2,
+        "max": 72.2,
+        "avg": 72.2,
+        "latest": 72.2
+      },
+      "rh": {
+        "min": 52.8,
+        "max": 52.8,
+        "avg": 52.8,
+        "latest": 52.8
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 0.0,
+      "rh_adherence": 100.0,
+      "in_band": false
+    },
+    {
+      "zone": "AHU 14",
+      "samples": 1,
+      "temp": {
+        "min": 70.2,
+        "max": 70.2,
+        "avg": 70.2,
+        "latest": 70.2
+      },
+      "rh": {
+        "min": 47.4,
+        "max": 47.4,
+        "avg": 47.4,
+        "latest": 47.4
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 100.0,
+      "rh_adherence": 100.0,
+      "in_band": true
+    },
+    {
+      "zone": "AHU 15",
+      "samples": 1,
+      "temp": {
+        "min": 71.5,
+        "max": 71.5,
+        "avg": 71.5,
+        "latest": 71.5
+      },
+      "rh": {
+        "min": 49.7,
+        "max": 49.7,
+        "avg": 49.7,
+        "latest": 49.7
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": 100.0,
+      "rh_adherence": 100.0,
+      "in_band": true
+    },
+    {
+      "zone": "AHU 19",
+      "samples": 1,
+      "temp": {
+        "min": null,
+        "max": null,
+        "avg": null,
+        "latest": null
+      },
+      "rh": {
+        "min": 48.9,
+        "max": 48.9,
+        "avg": 48.9,
+        "latest": 48.9
+      },
+      "temp_band": [
+        68.0,
+        72.0
+      ],
+      "rh_band": [
+        45.0,
+        55.0
+      ],
+      "temp_adherence": null,
+      "rh_adherence": 100.0,
+      "in_band": true
+    }
+  ],
+  "excursions": [
+    {
+      "zone": "AHU 13",
+      "metric": "temp",
+      "value": 72.2,
+      "at": "2026-08-10T11:00:20",
+      "band_lo": 68.0,
+      "band_hi": 72.0
+    }
+  ]
+}

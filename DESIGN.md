@@ -131,27 +131,29 @@ outgrows a flat file (years away at this rate).
 - Email = headline stats + **static snapshot image** of the key chart +
   **link to the live dashboard**. Useful at a glance, rich on click.
 
-**6. Access control — "me and staff"**
-- Plain **GitHub Pages is public** — no built-in gate unless on GitHub
-  Enterprise Cloud (private Pages).
-- **Recommended:** deploy the static build to **Cloudflare Pages + Cloudflare
-  Access** (free for ≤50 users) for real email / Google-SSO login. Keep code,
-  Actions, and data in GitHub; only the front door moves to Cloudflare.
-- Alternatives: GitHub Enterprise Cloud private Pages; Netlify Identity.
+**6. Access — public GitHub Pages** (chosen)
+- Repo is **public**; dashboard served by **GitHub Pages** — no auth layer.
+- Two mitigations baked in since this is the museum's facility data:
+  1. **Raw PDFs are NOT committed** to the public repo. They already live
+     permanently in Gmail (the durable archive); the repo persists only the
+     aggregated `data/readings.json`. (Add a private repo later if a redundant
+     PDF archive is wanted.)
+  2. **`generated_by` (person name) is dropped** on persist — the parser
+     extracts it for logs but `store.add_report()` never writes it to JSON.
 
 **7. Hosting.** GitHub Actions (compute/schedule) + GitHub repo (storage) +
-**Cloudflare Pages/Access** (gated dashboard). ~$0, near-zero ops.
+GitHub Pages (public dashboard). Single platform, ~$0, near-zero ops.
 
 ## 4. Recommended stack
 
 | Layer        | Choice |
 |--------------|--------|
 | Ingest/parse/aggregate/email | Python (pdfplumber, google-api-python-client, Resend) |
-| Storage      | Committed `data/readings.json` (or SQLite) in the repo |
-| Raw PDFs     | Committed to repo (or GitHub Release) |
-| Dashboard    | Static site (Recharts), ES2 dark theme, client-side interactive |
-| Scheduler    | GitHub Actions scheduled workflow @ 18:15 America/Chicago |
-| Hosting      | GitHub Actions + repo; Cloudflare Pages + Access for the gated site |
+| Storage      | Committed `data/readings.json` in the repo (name-scrubbed) |
+| Raw PDFs     | Left in Gmail (not committed to the public repo) |
+| Dashboard    | Static GitHub Pages site, client-side interactive charts |
+| Scheduler    | GitHub Actions scheduled workflow @ ~18:15 America/Chicago |
+| Hosting      | GitHub Actions + repo + GitHub Pages (all public, ~$0) |
 
 ## 5. Build phases
 

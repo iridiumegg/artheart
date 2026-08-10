@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>artheart — Gallery Conditions</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#232b36; --ink:#e6edf3;
+    --muted:#8b98a5; --teal:#2dd4bf; --teal-dim:#134e4a;
+    --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+    --mono:"DejaVu Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+  header{padding:28px 24px 8px;border-bottom:1px solid var(--line)}
+  h1{margin:0;font-size:22px;letter-spacing:.5px}
+  h1 span{color:var(--teal)}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px;font-family:var(--mono)}
+  main{max-width:1100px;margin:0 auto;padding:24px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .tile .k{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  .tile .v{font-size:30px;font-weight:600;margin-top:6px;font-family:var(--mono)}
+  .tile.alert .v{color:var(--bad)}
+  .tile.good .v{color:var(--ok)}
+  section h2{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);
+             border-bottom:1px solid var(--line);padding-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  td.mono{font-family:var(--mono)}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-family:var(--mono)}
+  .pill.ok{background:var(--teal-dim);color:var(--teal)}
+  .pill.bad{background:#3b1113;color:#fca5a5}
+  .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
+  .bar>i{display:block;height:100%;background:var(--teal)}
+  .exc{background:#1b1113;border:1px solid #3b1113;border-radius:10px;padding:12px 14px;margin:6px 0;
+       font-family:var(--mono);font-size:13px;color:#fca5a5}
+  .empty{color:var(--muted);font-family:var(--mono);padding:14px 0}
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:24px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<header>
+  <h1>art<span>heart</span> — Gallery Conditions</h1>
+  <div class="sub" id="datestamp">loading…</div>
+</header>
+<main>
+  <div class="tiles" id="tiles"></div>
+  <section>
+    <h2>Excursions <span style="text-transform:none;letter-spacing:0">(temp 68–72 °F · RH 45–55 %)</span></h2>
+    <div id="excursions"></div>
+  </section>
+  <section style="margin-top:26px">
+    <h2>Zones (by AHU)</h2>
+    <table>
+      <thead><tr>
+        <th>AHU</th><th>Temp °F (latest)</th><th>RH % (latest)</th>
+        <th>Temp adherence</th><th>RH adherence</th><th>Status</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+</main>
+<footer>artheart · CBMAA gallery-condition aggregator · <span id="foot"></span></footer>
+<script>
+const fmt=(v,u="")=>v==null?"—":v+u;
+function bar(pct){const p=pct==null?0:pct;return `<div class="bar"><i style="width:${p}%"></i></div>`+
+  `<div class="mono" style="font-size:12px;color:var(--muted);margin-top:3px">${fmt(pct,"%")}</div>`;}
+
+fetch("./data/summary.json?"+Date.now()).then(r=>r.json()).then(d=>{
+  document.getElementById("datestamp").textContent =
+    `${d.date} · ${d.snapshot_count} snapshot(s) · ${d.zone_count} zone(s)`;
+  document.getElementById("foot").textContent = "updated "+d.date;
+
+  const worst = [...d.zones].sort((a,b)=>(a.temp_adherence??100)-(b.temp_adherence??100))[0];
+  const tiles=[
+    ["Zones",d.zone_count,""],
+    ["Snapshots today",d.snapshot_count,""],
+    ["Excursions",d.excursion_count,d.excursion_count?"alert":"good"],
+    ["Lowest adherence",worst?`${worst.zone}`:"—",worst&&worst.temp_adherence<100?"alert":"good"],
+  ];
+  document.getElementById("tiles").innerHTML = tiles.map(([k,v,c])=>
+    `<div class="tile ${c}"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+
+  const ex=document.getElementById("excursions");
+  ex.innerHTML = d.excursions.length ? d.excursions.map(e=>{
+    const u=e.metric==="temp"?"°F":"%";
+    return `<div class="exc">⚠ ${e.zone} — ${e.metric.toUpperCase()} ${e.value}${u} `+
+           `outside ${e.band_lo}–${e.band_hi}${u} · ${e.at||""}</div>`;
+  }).join("") : `<div class="empty">✓ All zones within band today.</div>`;
+
+  document.getElementById("rows").innerHTML = d.zones.map(z=>{
+    const status = z.in_band===false
+      ? `<span class="pill bad">out of band</span>`
+      : `<span class="pill ok">in band</span>`;
+    return `<tr>
+      <td class="mono">${z.zone}</td>
+      <td class="mono">${fmt(z.temp.latest)}</td>
+      <td class="mono">${fmt(z.rh.latest)}</td>
+      <td>${bar(z.temp_adherence)}</td>
+      <td>${bar(z.rh_adherence)}</td>
+      <td>${status}</td></tr>`;
+  }).join("");
+}).catch(e=>{
+  document.getElementById("datestamp").textContent="No data yet — run the pipeline.";
+});
+</script>
+</body>
+</html>

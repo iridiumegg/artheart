@@ -1,0 +1,57 @@
+name: Daily gallery report
+
+on:
+  workflow_dispatch: {}          # manual "Run workflow" button
+  schedule:
+    # Cron is UTC. Two entries so ~18:15 America/Chicago fires year-round
+    # across DST. The pipeline only emails when local hour == SEND_HOUR (18),
+    # so the digest still goes out exactly once; both runs refresh the site.
+    - cron: "15 23 * * *"        # 18:15 CDT (summer) / 17:15 CST (winter)
+    - cron: "15 0 * * *"         # 19:15 CDT (summer) / 18:15 CST (winter)
+
+permissions:
+  contents: write                # commit updated data/readings.json
+  pages: write                   # deploy Pages
+  id-token: write                # Pages OIDC
+
+concurrency:
+  group: artheart-daily
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Run pipeline (ingest + aggregate + build site data)
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          ARTHEART_GMAIL_USER: ${{ secrets.ARTHEART_GMAIL_USER }}
+          ARTHEART_GMAIL_QUERY: ${{ vars.ARTHEART_GMAIL_QUERY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ARTHEART_DASHBOARD_URL: ${{ vars.ARTHEART_DASHBOARD_URL }}
+        run: python -m artheart.pipeline
+      - name: Commit updated readings
+        run: |
+          git config user.name  "artheart-bot"
+          git config user.email "actions@github.com"
+          git add data/readings.json
+          git diff --cached --quiet || git commit -m "data: update readings [skip ci]"
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

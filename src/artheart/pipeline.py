@@ -53,7 +53,8 @@ def run(*, do_ingest: bool = True) -> dict:
           f"{summary['zone_count']} zone(s), {summary['excursion_count']} excursion(s)")
 
     # Email digest around 6pm local (or forced for a manual test run).
-    should_email = os.environ.get("RESEND_API_KEY") and (
+    smtp_pw = os.environ.get("ARTHEART_SMTP_PASSWORD") or os.environ.get("ARTHEART_IMAP_PASSWORD")
+    should_email = smtp_pw and config.EMAIL_TO and (
         config.FORCE_EMAIL or _local_hour() == config.SEND_HOUR
     )
     if should_email:

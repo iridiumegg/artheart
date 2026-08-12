@@ -1,24 +1,24 @@
 """Phase 2: the 6 PM email digest.
 
-Sends via the Resend HTTP API using only the stdlib (urllib) so there's no
-extra dependency. Email is inline-styled table HTML for reliable rendering in
-Gmail/Outlook. Configured via env:
+Sends over Gmail SMTP with the stdlib (smtplib) — the SAME App Password used for
+IMAP ingest, so there's no second service, no custom domain, and no extra
+dependency. Email is inline-styled table HTML for reliable rendering in Gmail.
+Configured via env (all default sensibly to the IMAP account):
 
-  RESEND_API_KEY        -- Resend API key
-  ARTHEART_EMAIL_FROM   -- verified sender, e.g. "artheart <reports@your.dom>"
-  ARTHEART_EMAIL_TO     -- comma-separated recipients
-  ARTHEART_DASHBOARD_URL-- link the button points at
+  ARTHEART_IMAP_PASSWORD  -- the Gmail App Password (reused for SMTP auth)
+  ARTHEART_EMAIL_FROM     -- sender; defaults to the IMAP account address
+  ARTHEART_EMAIL_TO       -- comma-separated recipients; defaults to the account
+  ARTHEART_DASHBOARD_URL  -- link the button points at
 """
 from __future__ import annotations
 
-import json
 import os
-import urllib.request
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from typing import Any
 
 from . import config
-
-RESEND_URL = "https://api.resend.com/emails"
 
 # Palette (mirrors the dashboard).
 _BG = "#0d1117"
@@ -174,31 +174,42 @@ def build_html(summary: dict[str, Any], dashboard_url: str = "") -> str:
 </body></html>"""
 
 
-def send(summary: dict[str, Any], *, api_key: str | None = None,
+def _plain_text(summary: dict[str, Any], dashboard_url: str) -> str:
+    lines = [build_subject(summary), ""]
+    for e in summary.get("excursions", []):
+        u = "°F" if e["metric"] == "temp" else "%"
+        lines.append(f"! {e['zone']} {e['metric'].upper()} {e['value']}{u} "
+                     f"outside {e['band_lo']}-{e['band_hi']}{u}")
+    if not summary.get("excursions"):
+        lines.append("All zones within band.")
+    if dashboard_url:
+        lines += ["", f"Dashboard: {dashboard_url}"]
+    return "\n".join(lines)
+
+
+def send(summary: dict[str, Any], *, password: str | None = None,
          sender: str | None = None, to: str | None = None,
-         dashboard_url: str | None = None) -> dict:
-    """Send the digest via Resend. Raises on missing config or HTTP error."""
-    api_key = api_key or os.environ.get("RESEND_API_KEY", "")
-    sender = sender or config.EMAIL_FROM
-    to = to or config.EMAIL_TO
+         dashboard_url: str | None = None) -> None:
+    """Send the digest over Gmail SMTP. Raises on missing config or SMTP error."""
+    password = password or os.environ.get("ARTHEART_SMTP_PASSWORD") \
+        or os.environ.get("ARTHEART_IMAP_PASSWORD", "")
+    sender = sender or config.EMAIL_FROM or config.SMTP_USER
+    to = to or config.EMAIL_TO or config.SMTP_USER
     dashboard_url = dashboard_url if dashboard_url is not None else config.DASHBOARD_URL
-    if not api_key or not sender or not to:
+    if not password or not config.SMTP_USER or not to:
         raise RuntimeError(
-            "email needs RESEND_API_KEY, ARTHEART_EMAIL_FROM, ARTHEART_EMAIL_TO"
+            "email needs ARTHEART_IMAP_USER, ARTHEART_IMAP_PASSWORD, ARTHEART_EMAIL_TO"
         )
 
-    payload = {
-        "from": sender,
-        "to": [addr.strip() for addr in to.split(",") if addr.strip()],
-        "subject": build_subject(summary),
-        "html": build_html(summary, dashboard_url),
-    }
-    req = urllib.request.Request(
-        RESEND_URL,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Authorization": f"Bearer {api_key}",
-                 "Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    recipients = [a.strip() for a in to.split(",") if a.strip()]
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = build_subject(summary)
+    msg["From"] = sender
+    msg["To"] = ", ".join(recipients)
+    msg.attach(MIMEText(_plain_text(summary, dashboard_url), "plain", "utf-8"))
+    msg.attach(MIMEText(build_html(summary, dashboard_url), "html", "utf-8"))
+
+    with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=30) as s:
+        s.starttls()
+        s.login(config.SMTP_USER, password)
+        s.sendmail(sender, recipients, msg.as_string())

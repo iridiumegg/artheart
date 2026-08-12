@@ -30,24 +30,22 @@ Secrets:
 |------|-------|
 | `ARTHEART_IMAP_USER` | the mailbox that receives the reports, e.g. `you@gmail.com` |
 | `ARTHEART_IMAP_PASSWORD` | the 16-char **App Password** from step 1 (not your login password) |
-| `RESEND_API_KEY` | transactional-email key for the 6 PM digest |
 
 Variables:
 | Name | Value |
 |------|-------|
 | `ARTHEART_DASHBOARD_URL` | the Pages URL, once known (e.g. `https://iridiumegg.github.io/artheart/`) |
-| `ARTHEART_EMAIL_FROM` | verified Resend sender, e.g. `artheart <reports@yourdomain.com>` |
-| `ARTHEART_EMAIL_TO` | recipient(s), comma-separated, e.g. `nstewart@es2built.com` |
+| `ARTHEART_EMAIL_TO` | who gets the digest, comma-separated (defaults to the IMAP account) |
+| `ARTHEART_EMAIL_FROM` | optional display sender; defaults to the IMAP account address |
 
 > Optional overrides (defaults are correct for CBMAA): `ARTHEART_REPORT_FROM`,
 > `ARTHEART_REPORT_SUBJECT`, `ARTHEART_IMAP_HOST`, `ARTHEART_IMAP_MAILBOX`.
 
-## 2b. Email digest (Resend)
+## 2b. Email digest (Gmail SMTP — no extra service)
 
-1. Create a **Resend** account and **verify a sending domain** (add the DNS
-   records Resend gives you). Free tier is plenty for one daily email.
-2. Create an API key → store as the `RESEND_API_KEY` secret.
-3. Set `ARTHEART_EMAIL_FROM` / `ARTHEART_EMAIL_TO` variables above.
+There is **nothing to set up** beyond the App Password above: the digest is sent
+over Gmail SMTP using the same `ARTHEART_IMAP_PASSWORD`, from your Gmail account,
+to `ARTHEART_EMAIL_TO` (or yourself by default). No Resend, no custom domain.
 
 The digest sends automatically at ~6 PM Central. To test off-hours, run the
 workflow manually with the repo/env variable `ARTHEART_FORCE_EMAIL=true`, or

@@ -31,7 +31,6 @@ jobs:
         env:
           ARTHEART_IMAP_USER: ${{ secrets.ARTHEART_IMAP_USER }}
           ARTHEART_IMAP_PASSWORD: ${{ secrets.ARTHEART_IMAP_PASSWORD }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           ARTHEART_EMAIL_FROM: ${{ vars.ARTHEART_EMAIL_FROM }}
           ARTHEART_EMAIL_TO: ${{ vars.ARTHEART_EMAIL_TO }}
           ARTHEART_DASHBOARD_URL: ${{ vars.ARTHEART_DASHBOARD_URL }}

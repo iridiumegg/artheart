@@ -28,10 +28,13 @@ IMAP_SINCE_DAYS = int(os.environ.get("ARTHEART_IMAP_SINCE_DAYS", "0"))
 DATA_FILE = os.environ.get("ARTHEART_DATA_FILE", "data/readings.json")
 SITE_DATA_DIR = os.environ.get("ARTHEART_SITE_DATA", "site/data")
 
-# --- Dashboard / email --------------------------------------------------------
+# --- Dashboard / email (Gmail SMTP; reuses the IMAP App Password) --------------
 DASHBOARD_URL = os.environ.get("ARTHEART_DASHBOARD_URL", "")
-EMAIL_FROM = os.environ.get("ARTHEART_EMAIL_FROM", "")   # verified Resend sender
-EMAIL_TO = os.environ.get("ARTHEART_EMAIL_TO", "")       # comma-separated
+SMTP_HOST = os.environ.get("ARTHEART_SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("ARTHEART_SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("ARTHEART_SMTP_USER", "") or IMAP_USER
+EMAIL_FROM = os.environ.get("ARTHEART_EMAIL_FROM", "") or IMAP_USER  # default: send from self
+EMAIL_TO = os.environ.get("ARTHEART_EMAIL_TO", "") or IMAP_USER      # default: to self
 # Bypass the "only at SEND_HOUR" guard (for manual test runs).
 FORCE_EMAIL = os.environ.get("ARTHEART_FORCE_EMAIL", "").lower() in ("1", "true", "yes")
 

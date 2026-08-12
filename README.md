@@ -10,7 +10,7 @@ See [DESIGN.md](DESIGN.md) for the full architecture and build phases.
 - [x] WebCTRL PDF parser (validated against a real report)
 - [x] Flat-file store (dedup + name scrubbing)
 - [x] Daily aggregation + derived excursions
-- [x] Gmail ingestor (service account) — needs credentials to run live
+- [x] Email ingestor (IMAP + App Password, stdlib) — needs credentials to run live
 - [x] GitHub Actions workflow (schedule + Pages deploy)
 - [x] Dashboard placeholder (reads summary.json)
 - [x] 6 PM email digest (Resend, stdlib-only)

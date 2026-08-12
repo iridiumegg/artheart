@@ -31,13 +31,13 @@ def run(*, do_ingest: bool = True) -> dict:
     data = store.load_store(config.DATA_FILE)
 
     added = 0
-    if do_ingest and os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON") and config.GMAIL_USER:
+    if do_ingest and config.IMAP_USER and os.environ.get("ARTHEART_IMAP_PASSWORD"):
         from . import ingest
         added = ingest.fetch_and_store(data)
         store.save_store(config.DATA_FILE, data)
         print(f"ingest: added {added} new report(s)")
     else:
-        print("ingest: skipped (no Gmail credentials configured)")
+        print("ingest: skipped (no IMAP credentials configured)")
 
     today = _today_local()
     summary = aggregate.daily_summary(data, today)

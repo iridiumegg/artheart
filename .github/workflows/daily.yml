@@ -29,9 +29,8 @@ jobs:
       - run: pip install -e .
       - name: Run pipeline (ingest + aggregate + build site data)
         env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          ARTHEART_GMAIL_USER: ${{ secrets.ARTHEART_GMAIL_USER }}
-          ARTHEART_GMAIL_QUERY: ${{ vars.ARTHEART_GMAIL_QUERY }}
+          ARTHEART_IMAP_USER: ${{ secrets.ARTHEART_IMAP_USER }}
+          ARTHEART_IMAP_PASSWORD: ${{ secrets.ARTHEART_IMAP_PASSWORD }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           ARTHEART_EMAIL_FROM: ${{ vars.ARTHEART_EMAIL_FROM }}
           ARTHEART_EMAIL_TO: ${{ vars.ARTHEART_EMAIL_TO }}

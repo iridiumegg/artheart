@@ -14,15 +14,15 @@ DEFAULT_RH_BAND = (45.0, 55.0)     # % RH   (CBMAA confirmed)
 # Per-zone overrides, e.g. {"AHU 8": {"temp": (67, 71)}}. Empty = use defaults.
 ZONE_BANDS: dict[str, dict[str, tuple[float, float]]] = {}
 
-# --- Gmail ingest -------------------------------------------------------------
-# Query that selects the report emails. TODO: confirm the real label/sender.
-# Examples: 'subject:CBMAA has:attachment filename:pdf'
-#           'from:webctrl@crystalbridges.org has:attachment'
-GMAIL_QUERY = os.environ.get(
-    "ARTHEART_GMAIL_QUERY", "has:attachment filename:pdf subject:CBMAA"
-)
-# Mailbox to read (service account impersonates this Workspace user).
-GMAIL_USER = os.environ.get("ARTHEART_GMAIL_USER", "")
+# --- Email ingest (IMAP; works with personal Gmail + an App Password) ---------
+IMAP_HOST = os.environ.get("ARTHEART_IMAP_HOST", "imap.gmail.com")
+IMAP_USER = os.environ.get("ARTHEART_IMAP_USER", "")        # mailbox that receives reports
+IMAP_MAILBOX = os.environ.get("ARTHEART_IMAP_MAILBOX", "INBOX")
+# Report emails are matched by sender + subject substring (confirmed values).
+REPORT_FROM = os.environ.get("ARTHEART_REPORT_FROM", "cbmorspace@aweoffice.org")
+REPORT_SUBJECT = os.environ.get("ARTHEART_REPORT_SUBJECT", "Gallery Heartbeat")
+# Optional lookback bound; 0 = search all matching mail (dedup prevents rework).
+IMAP_SINCE_DAYS = int(os.environ.get("ARTHEART_IMAP_SINCE_DAYS", "0"))
 
 # --- Paths --------------------------------------------------------------------
 DATA_FILE = os.environ.get("ARTHEART_DATA_FILE", "data/readings.json")

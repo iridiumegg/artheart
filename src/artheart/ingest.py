@@ -1,94 +1,104 @@
-"""Gmail ingestion via a Workspace service account (domain-wide delegation).
+"""Email ingestion over IMAP — works with a personal Gmail + App Password.
 
-Google libraries are imported lazily so the rest of the package (and its tests)
-never require them. Credentials come from env:
+No external dependencies (imaplib + email are stdlib) and no Google Cloud
+project: enable 2-Step Verification on the mailbox, generate an App Password,
+and set:
 
-  GOOGLE_SERVICE_ACCOUNT_JSON  -- the service-account key JSON (string)
-  ARTHEART_GMAIL_USER          -- mailbox to read (impersonated)
-  ARTHEART_GMAIL_QUERY         -- Gmail search selecting the report emails
+  ARTHEART_IMAP_USER      -- the mailbox address that receives the reports
+  ARTHEART_IMAP_PASSWORD  -- a Gmail App Password (NOT the normal password)
 
-Raw PDFs are parsed in a temp dir and NOT persisted to the public repo.
+Report emails are selected by sender + subject (config.REPORT_FROM /
+REPORT_SUBJECT). PDFs are parsed in memory and NOT persisted to the repo;
+dedup is by the email's Message-ID.
 """
 from __future__ import annotations
 
-import base64
-import json
+import email
+import imaplib
 import os
 import tempfile
+from datetime import datetime, timedelta, timezone
+from email.header import decode_header, make_header
 from typing import Any
 
 from . import config
 from .parser import parse_report
 
-GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+
+def _decode(raw: bytes | str | None) -> str:
+    if raw is None:
+        return ""
+    if isinstance(raw, bytes):
+        raw = raw.decode("utf-8", "ignore")
+    return str(make_header(decode_header(raw))).strip()
 
 
-def _service(sa_json: str, user: str):
-    from google.oauth2 import service_account  # lazy
-    from googleapiclient.discovery import build
-
-    info = json.loads(sa_json)
-    creds = service_account.Credentials.from_service_account_info(
-        info, scopes=GMAIL_SCOPES, subject=user
-    )
-    return build("gmail", "v1", credentials=creds, cache_discovery=False)
+def _search_criteria() -> list[str]:
+    crit = ["FROM", f'"{config.REPORT_FROM}"', "SUBJECT", f'"{config.REPORT_SUBJECT}"']
+    if config.IMAP_SINCE_DAYS > 0:
+        since = datetime.now(timezone.utc) - timedelta(days=config.IMAP_SINCE_DAYS)
+        crit += ["SINCE", since.strftime("%d-%b-%Y")]
+    return crit
 
 
-def _iter_pdf_attachments(svc, user: str, msg_id: str):
-    """Yield (filename, bytes) for each PDF attachment on a message."""
-    msg = svc.users().messages().get(userId=user, id=msg_id, format="full").execute()
-    parts = list(msg.get("payload", {}).get("parts", []) or [])
-    while parts:
-        part = parts.pop()
-        parts.extend(part.get("parts", []) or [])
-        filename = part.get("filename") or ""
-        if not filename.lower().endswith(".pdf"):
+def _pdf_attachments(msg: email.message.Message):
+    for part in msg.walk():
+        if part.get_content_maintype() == "multipart":
             continue
-        body = part.get("body", {})
-        att_id = body.get("attachmentId")
-        if att_id:
-            att = svc.users().messages().attachments().get(
-                userId=user, messageId=msg_id, id=att_id
-            ).execute()
-            data = att.get("data", "")
-        else:
-            data = body.get("data", "")
-        if data:
-            yield filename, base64.urlsafe_b64decode(data)
+        filename = _decode(part.get_filename())
+        ctype = part.get_content_type()
+        if filename.lower().endswith(".pdf") or ctype == "application/pdf":
+            payload = part.get_payload(decode=True)
+            if payload:
+                yield filename or "report.pdf", payload
 
 
-def fetch_and_store(store_obj: dict[str, Any], *, sa_json: str | None = None,
-                    user: str | None = None, query: str | None = None) -> int:
-    """Pull new report emails, parse their PDFs, add to the store. Returns new count."""
-    sa_json = sa_json or os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "")
-    user = user or config.GMAIL_USER
-    query = query or config.GMAIL_QUERY
-    if not sa_json or not user:
+def fetch_and_store(store_obj: dict[str, Any], *, user: str | None = None,
+                    password: str | None = None) -> int:
+    """Pull matching report emails, parse their PDFs, add to the store.
+
+    Returns the number of newly added reports.
+    """
+    user = user or config.IMAP_USER
+    password = password or os.environ.get("ARTHEART_IMAP_PASSWORD", "")
+    if not user or not password:
         raise RuntimeError(
-            "Gmail ingest needs GOOGLE_SERVICE_ACCOUNT_JSON and ARTHEART_GMAIL_USER"
+            "IMAP ingest needs ARTHEART_IMAP_USER and ARTHEART_IMAP_PASSWORD"
         )
 
-    from .store import add_report, has_report  # local import keeps store dep-free
+    from .store import add_report, has_report  # keep store import-light
 
-    svc = _service(sa_json, user)
     added = 0
-    page_token = None
-    while True:
-        resp = svc.users().messages().list(
-            userId=user, q=query, pageToken=page_token, maxResults=100
-        ).execute()
-        for m in resp.get("messages", []):
-            msg_id = m["id"]
+    M = imaplib.IMAP4_SSL(config.IMAP_HOST)
+    try:
+        M.login(user, password)
+        M.select(config.IMAP_MAILBOX, readonly=True)
+        typ, data = M.search(None, *_search_criteria())
+        if typ != "OK":
+            return 0
+        for num in data[0].split():
+            # Cheap dedup: peek only the Message-ID before downloading the body.
+            typ, hdr = M.fetch(num, "(BODY.PEEK[HEADER.FIELDS (MESSAGE-ID)])")
+            if typ != "OK" or not hdr or not hdr[0]:
+                continue
+            msg_id = _decode(email.message_from_bytes(hdr[0][1]).get("Message-ID")) \
+                or num.decode()
             if has_report(store_obj, msg_id):
                 continue
-            for _fname, pdf_bytes in _iter_pdf_attachments(svc, user, msg_id):
-                with tempfile.NamedTemporaryFile(suffix=".pdf", delete=True) as tf:
+            typ, raw = M.fetch(num, "(RFC822)")
+            if typ != "OK" or not raw or not raw[0]:
+                continue
+            msg = email.message_from_bytes(raw[0][1])
+            for _fname, pdf_bytes in _pdf_attachments(msg):
+                with tempfile.NamedTemporaryFile(suffix=".pdf") as tf:
                     tf.write(pdf_bytes)
                     tf.flush()
                     report = parse_report(tf.name)
                 if add_report(store_obj, report.as_dict(), msg_id):
                     added += 1
-        page_token = resp.get("nextPageToken")
-        if not page_token:
-            break
+    finally:
+        try:
+            M.logout()
+        except Exception:
+            pass
     return added

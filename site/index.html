@@ -66,6 +66,7 @@
   .metric .mv{font-family:var(--mono);font-size:20px;font-weight:700}
   .metric .ml{font-size:11px;color:var(--sec);text-transform:uppercase;letter-spacing:.5px}
   .metric .adh{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--sec)}
+  svg text{pointer-events:none}  /* labels never steal hover from the marks */
   svg .grid{stroke:var(--subtle);stroke-width:1}
   svg .axis{fill:var(--muted);font-family:var(--mono);font-size:10px}
   svg .band{fill:rgba(61,214,200,.07)}
@@ -107,6 +108,10 @@ function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;
   const r=tip.getBoundingClientRect();let nx=x+14,ny=y-r.height-10;
   if(nx+r.width>innerWidth)nx=x-r.width-14; if(ny<0)ny=y+16; tip.style.left=nx+"px";tip.style.top=ny+"px";}
 function hideTip(){tip.style.opacity=0;}
+// Any scroll / wheel / touch / click dismisses a lingering tooltip — mouseleave
+// alone is unreliable while scrolling and never fires on touch.
+["scroll","wheel","touchstart","touchmove","click","resize"].forEach(ev=>
+  window.addEventListener(ev, hideTip, {passive:true, capture:true}));
 function svgPt(svg,evt){const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;
   return p.matrixTransform(svg.getScreenCTM().inverse());}
 

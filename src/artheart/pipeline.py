@@ -54,7 +54,7 @@ def run(*, do_ingest: bool = True) -> dict:
     if os.path.exists(config.DATA_FILE):
         shutil.copyfile(config.DATA_FILE,
                         os.path.join(config.SITE_DATA_DIR, "readings.json"))
-    print(f"summary: {today} -> {summary['snapshot_count']} snapshot(s), "
+    print(f"summary: {report_date} -> {summary['snapshot_count']} snapshot(s), "
           f"{summary['zone_count']} zone(s), {summary['excursion_count']} excursion(s)")
 
     # Email digest around 6pm local (or forced for a manual test run).

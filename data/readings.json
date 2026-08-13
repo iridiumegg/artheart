@@ -2,57 +2,6 @@
   "version": 1,
   "reports": [
     {
-      "location_path": "Crystal Bridges Museum / CBMAA Main / 2nd Floor / AHU 1",
-      "generated_at": "2026-08-10T11:00:20",
-      "readings": [
-        {
-          "zone": "AHU 2",
-          "rh": 53.8,
-          "rh_ts": "2026-08-10T09:14:55",
-          "temp_f": 69.0
-        },
-        {
-          "zone": "AHU 4",
-          "rh": 48.7,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": 69.5
-        },
-        {
-          "zone": "AHU 8",
-          "rh": 52.1,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": 71.4
-        },
-        {
-          "zone": "AHU 13",
-          "rh": 52.8,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": 72.2
-        },
-        {
-          "zone": "AHU 14",
-          "rh": 47.4,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": 70.2
-        },
-        {
-          "zone": "AHU 15",
-          "rh": 49.7,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": 71.5
-        },
-        {
-          "zone": "AHU 19",
-          "rh": 48.9,
-          "rh_ts": "2026-08-10T11:00:00",
-          "temp_f": null
-        }
-      ],
-      "parse_confidence": 1.0,
-      "gallery_title": "CBMAA Gallery 2",
-      "gmail_msg_id": "seed-20260810-1100"
-    },
-    {
       "location_path": "Art + Wellness Enterprises",
       "generated_at": "2026-08-11T07:00:13",
       "readings": [

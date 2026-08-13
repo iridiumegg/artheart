@@ -459,6 +459,57 @@
       "parse_confidence": 0.8,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<557296071.10.1786622408556@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / 2nd Floor / AHU 1",
+      "generated_at": "2026-08-13T11:00:09",
+      "readings": [
+        {
+          "zone": "AHU 2",
+          "rh": 51.7,
+          "rh_ts": "2026-08-13T10:21:15",
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 4",
+          "rh": 48.3,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": 69.0
+        },
+        {
+          "zone": "AHU 8",
+          "rh": 51.6,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": 71.6
+        },
+        {
+          "zone": "AHU 13",
+          "rh": 49.6,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": null
+        },
+        {
+          "zone": "AHU 14",
+          "rh": 46.2,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": 70.2
+        },
+        {
+          "zone": "AHU 15",
+          "rh": 50.7,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": 71.5
+        },
+        {
+          "zone": "AHU 19",
+          "rh": 46.5,
+          "rh_ts": "2026-08-13T11:00:00",
+          "temp_f": null
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery 2",
+      "gmail_msg_id": "<370040665.16.1786636809278@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

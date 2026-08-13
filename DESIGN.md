@@ -152,7 +152,7 @@ GitHub Pages (public dashboard). Single platform, ~$0, near-zero ops.
 | Storage      | Committed `data/readings.json` in the repo (name-scrubbed) |
 | Raw PDFs     | Left in Gmail (not committed to the public repo) |
 | Dashboard    | Static GitHub Pages site, client-side interactive charts |
-| Scheduler    | GitHub Actions scheduled workflow @ ~18:15 America/Chicago |
+| Scheduler    | GitHub Actions poll every ~15 min (deploy on change); email once/day ~18:00 CT |
 | Hosting      | GitHub Actions + repo + GitHub Pages (all public, ~$0) |
 
 ## 5. Build phases

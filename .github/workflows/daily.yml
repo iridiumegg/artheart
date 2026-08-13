@@ -1,4 +1,4 @@
-name: Daily gallery report
+name: Gallery report sync
 
 on:
   workflow_dispatch:             # manual "Run workflow" button
@@ -8,11 +8,11 @@ on:
         type: boolean
         default: false
   schedule:
-    # Cron is UTC. Two entries so ~18:15 America/Chicago fires year-round
-    # across DST. The pipeline only emails when local hour == SEND_HOUR (18),
-    # so the digest still goes out exactly once; both runs refresh the site.
-    - cron: "15 23 * * *"        # 18:15 CDT (summer) / 17:15 CST (winter)
-    - cron: "15 0 * * *"         # 19:15 CDT (summer) / 18:15 CST (winter)
+    # Poll the inbox every ~15 min so the dashboard updates shortly after each
+    # report email arrives. Runs are cheap and no-op unless a new report is
+    # found; the dashboard is redeployed only when the data actually changes.
+    # (GitHub may space scheduled runs out under load — 15 min is a floor.)
+    - cron: "*/15 * * * *"
 
 permissions:
   contents: write                # commit updated data/readings.json
@@ -20,12 +20,14 @@ permissions:
   id-token: write                # Pages OIDC
 
 concurrency:
-  group: artheart-daily
+  group: artheart-sync
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.diff.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,19 +43,31 @@ jobs:
           ARTHEART_EMAIL_TO: ${{ vars.ARTHEART_EMAIL_TO }}
           ARTHEART_DASHBOARD_URL: ${{ vars.ARTHEART_DASHBOARD_URL }}
         run: python -m artheart.pipeline
-      - name: Commit updated readings
+      - name: Detect new data
+        id: diff
+        run: |
+          # readings.json changes only when a new report was ingested; the
+          # dashboard is a deterministic function of it, so this is the signal.
+          if git diff --quiet -- data/readings.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Commit data (readings + email marker)
         run: |
           git config user.name  "artheart-bot"
           git config user.email "actions@github.com"
-          git add data/readings.json
-          git diff --cached --quiet || git commit -m "data: update readings [skip ci]"
-          git push
-      - uses: actions/upload-pages-artifact@v3
+          git add data/
+          git diff --cached --quiet || { git commit -m "data: update [skip ci]"; git push; }
+      - name: Upload site artifact
+        if: steps.diff.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
   deploy:
     needs: build
+    if: needs.build.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

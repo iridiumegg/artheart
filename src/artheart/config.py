@@ -27,6 +27,9 @@ IMAP_SINCE_DAYS = int(os.environ.get("ARTHEART_IMAP_SINCE_DAYS", "0"))
 # --- Paths --------------------------------------------------------------------
 DATA_FILE = os.environ.get("ARTHEART_DATA_FILE", "data/readings.json")
 SITE_DATA_DIR = os.environ.get("ARTHEART_SITE_DATA", "site/data")
+# Records the last calendar date the digest was emailed, so the frequent poll
+# sends it only once per day.
+EMAIL_MARKER = os.environ.get("ARTHEART_EMAIL_MARKER", "data/.last_email")
 
 # --- Dashboard / email (Gmail SMTP; reuses the IMAP App Password) --------------
 DASHBOARD_URL = os.environ.get(

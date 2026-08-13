@@ -53,10 +53,18 @@ run `ARTHEART_FORCE_EMAIL=true python -m artheart.pipeline` locally.
 
 ## 3. Run it
 
-- **Actions → Daily gallery report → Run workflow** (manual), or wait for the
-  ~6:15 PM Central schedule.
-- The run ingests new report emails, updates `data/readings.json`, rebuilds
-  `site/`, and deploys Pages.
+- **Actions → Gallery report sync → Run workflow** (manual), or just wait — it
+  polls automatically.
+- **Cadence:** the workflow polls the inbox **every ~15 min**. When a new report
+  email is found it ingests it and **redeploys the dashboard** (runs with no new
+  mail are no-ops and skip the deploy). The **email digest** still goes out
+  **once per day at ~6 PM Central** (a per-day marker keeps the frequent polls
+  from sending duplicates).
+- A manual run always rebuilds and deploys; tick **force email** to also send
+  the digest immediately.
+
+> Note: pushing dashboard *code* changes (e.g. `site/index.html`) redeploys on
+> the next run that ingests new data, or immediately via a manual run.
 
 ## Report filter (already configured)
 

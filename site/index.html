@@ -104,14 +104,30 @@
 const C={teal:"#3dd6c8",blue:"#4fa3e0",error:"#e05656",muted:"#4d6a85",sec:"#8baec8",ink:"#fff"};
 const tip=document.getElementById("tip");
 const fmt=(v,u="")=>v==null?"—":`${v}${u}`;
-function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;
-  const r=tip.getBoundingClientRect();let nx=x+14,ny=y-r.height-10;
-  if(nx+r.width>innerWidth)nx=x-r.width-14; if(ny<0)ny=y+16; tip.style.left=nx+"px";tip.style.top=ny+"px";}
-function hideTip(){tip.style.opacity=0;}
-// Any scroll / wheel / touch / click dismisses a lingering tooltip — mouseleave
-// alone is unreliable while scrolling and never fires on touch.
-["scroll","wheel","touchstart","touchmove","click","resize"].forEach(ev=>
+let pinnedEl=null;                       // a mark whose tooltip is held open by a tap/click
+function positionTip(x,y){const r=tip.getBoundingClientRect();let nx=x+14,ny=y-r.height-12;
+  if(nx+r.width>innerWidth-8)nx=innerWidth-r.width-8; if(nx<8)nx=8; if(ny<8)ny=y+20;
+  tip.style.left=nx+"px";tip.style.top=ny+"px";}
+function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;positionTip(x,y);}
+function hideTip(){tip.style.opacity=0;pinnedEl=null;}
+// Bind a chart mark: hover previews on desktop; tap opens & pins on mobile,
+// tap again (or tap off the mark) dismisses. htmlFor(evt) -> tooltip HTML.
+function bindTip(el, htmlFor){
+  el.style.cursor="pointer";
+  el.addEventListener("mouseenter",e=>{ if(!pinnedEl) showTip(htmlFor(e),e.clientX,e.clientY); });
+  el.addEventListener("mousemove", e=>{ if(!pinnedEl) positionTip(e.clientX,e.clientY); });
+  el.addEventListener("mouseleave",()=>{ if(!pinnedEl) tip.style.opacity=0; });
+  el.addEventListener("click", e=>{
+    e.stopPropagation();                 // keep the off-mark dismiss handler from firing
+    if(pinnedEl===el){ hideTip(); return; }
+    pinnedEl=el; showTip(htmlFor(e), e.clientX, e.clientY);
+  });
+}
+// Dismiss on scroll/resize, or on any tap/click that isn't on a mark (marks
+// stopPropagation, so this only sees off-mark taps).
+["scroll","wheel","resize"].forEach(ev=>
   window.addEventListener(ev, hideTip, {passive:true, capture:true}));
+document.addEventListener("click", hideTip);
 function svgPt(svg,evt){const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;
   return p.matrixTransform(svg.getScreenCTM().inverse());}
 
@@ -129,6 +145,7 @@ fetch("./data/dashboard.json?"+Date.now()).then(r=>r.json()).then(d=>{
   '<div class="empty">No data yet — run the pipeline to publish the first report.</div>';});
 
 function render(){
+  hideTip();                             // clear any pinned tooltip when the view rebuilds
   const day=DATA.days[DATE]; if(!day){return;}
   const zones=day.zones||[], exc=day.excursions||[];
   const tAdh=avg(zones.map(z=>z.temp_adherence)), rAdh=avg(zones.map(z=>z.rh_adherence));
@@ -219,14 +236,10 @@ function spark(host,series,band,color,unit,zone){
     ${pts.length>1?`<path d="${line}" fill="none" stroke="${color}" stroke-width="2"
        stroke-linejoin="round" stroke-linecap="round"/>`:""}
     ${dots}</svg>`;
-  const svg=host.querySelector("svg");
-  svg.querySelectorAll("circle").forEach(c=>{
-    c.style.cursor="pointer";
-    c.onmouseenter=e=>{const out=c.dataset.out==="1";
-      showTip(`<b>${zone}</b> · ${c.dataset.at.replace("T"," ")}<br>${c.dataset.v}${unit}`+
-        (out?` <span style="color:${C.error}">out of band</span>`:""),e.clientX,e.clientY);};
-    c.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY);
-    c.onmouseleave=hideTip;
+  host.querySelector("svg").querySelectorAll("circle").forEach(c=>{
+    bindTip(c, ()=>{const out=c.dataset.out==="1";
+      return `<b>${zone}</b> · ${c.dataset.at.replace("T"," ")}<br>${c.dataset.v}${unit}`+
+        (out?` <span style="color:${C.error}">out of band</span>`:"");});
   });
 }
 
@@ -261,12 +274,9 @@ function drawTrend(host){
     <text class="axis" x="${PL}" y="${H-8}">${dates[0]||""}</text>
     <text class="axis" x="${PL+iw}" y="${H-8}" text-anchor="end">${dates[n-1]||""}</text>
   </svg>${n<=1?'<div class="note">History builds as more days are collected — one day so far.</div>':""}`;
-  const svg=host.querySelector("svg");
-  svg.querySelectorAll("circle").forEach(c=>{c.style.cursor="pointer";
-    c.onmouseenter=e=>showTip(`<b>${c.dataset.m}</b> · ${c.dataset.d}<br>${c.dataset.v}% in band`,e.clientX,e.clientY);
-    c.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY); c.onmouseleave=hideTip;
-    c.onclick=()=>{if(DATA.days[c.dataset.d]){DATE=c.dataset.d;
-      document.getElementById("datesel").value=DATE;render();}};});
+  host.querySelector("svg").querySelectorAll("circle").forEach(c=>{
+    bindTip(c, ()=>`<b>${c.dataset.m}</b> · ${c.dataset.d}<br>${c.dataset.v}% in band`);
+  });
 }
 
 /* ---- heatmap: zones × [Temp,RH], sequential teal by adherence ---- */
@@ -294,8 +304,8 @@ function drawHeat(host,zones){
   });
   host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${cells}</svg>`;
   host.querySelectorAll("rect").forEach(r=>{
-    r.onmouseenter=e=>showTip(`<b>${r.dataset.z}</b> · ${r.dataset.m}<br>${r.dataset.p}% in band`,e.clientX,e.clientY);
-    r.onmousemove=e=>showTip(tip.innerHTML,e.clientX,e.clientY); r.onmouseleave=hideTip;});
+    bindTip(r, ()=>`<b>${r.dataset.z}</b> · ${r.dataset.m}<br>${r.dataset.p}% in band`);
+  });
 }
 
 /* ---- accessible table view ---- */

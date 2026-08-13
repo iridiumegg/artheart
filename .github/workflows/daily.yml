@@ -1,7 +1,12 @@
 name: Daily gallery report
 
 on:
-  workflow_dispatch: {}          # manual "Run workflow" button
+  workflow_dispatch:             # manual "Run workflow" button
+    inputs:
+      force_email:
+        description: "Send the email digest now, regardless of time of day"
+        type: boolean
+        default: false
   schedule:
     # Cron is UTC. Two entries so ~18:15 America/Chicago fires year-round
     # across DST. The pipeline only emails when local hour == SEND_HOUR (18),
@@ -31,6 +36,7 @@ jobs:
         env:
           ARTHEART_IMAP_USER: ${{ secrets.ARTHEART_IMAP_USER }}
           ARTHEART_IMAP_PASSWORD: ${{ secrets.ARTHEART_IMAP_PASSWORD }}
+          ARTHEART_FORCE_EMAIL: ${{ inputs.force_email }}
           ARTHEART_EMAIL_FROM: ${{ vars.ARTHEART_EMAIL_FROM }}
           ARTHEART_EMAIL_TO: ${{ vars.ARTHEART_EMAIL_TO }}
           ARTHEART_DASHBOARD_URL: ${{ vars.ARTHEART_DASHBOARD_URL }}

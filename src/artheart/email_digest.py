@@ -20,15 +20,18 @@ from typing import Any
 
 from . import config
 
-# Palette (mirrors the dashboard).
-_BG = "#0d1117"
-_PANEL = "#161b22"
-_LINE = "#232b36"
-_INK = "#e6edf3"
-_MUTED = "#8b98a5"
-_TEAL = "#2dd4bf"
-_BAD = "#ef4444"
-_OK = "#22c55e"
+# ES2 palette. Solid colors only (email clients drop rgba); every panel also
+# carries a bgcolor="" attribute so Gmail can't strip the dark background.
+_BG = "#0b1120"
+_CARD = "#111d35"
+_TILE = "#16243f"
+_LINE = "#22314d"
+_INK = "#ffffff"
+_SEC = "#8baec8"
+_MUTED = "#5b7590"
+_TEAL = "#3dd6c8"
+_BAD = "#e05656"
+_OK = "#3dd6c8"
 
 
 def build_subject(summary: dict[str, Any]) -> str:
@@ -53,123 +56,117 @@ def _adh_color(pct):
 
 def build_html(summary: dict[str, Any], dashboard_url: str = "") -> str:
     date = summary.get("date", "")
-    zc = summary.get("zone_count", 0)
     sc = summary.get("snapshot_count", 0)
     ec = summary.get("excursion_count", 0)
+    zc = summary.get("zone_count", 0)
 
     def stat(label, value, color=_INK):
         return (
-            f'<td align="center" style="padding:14px;background:{_PANEL};'
-            f'border:1px solid {_LINE};border-radius:10px">'
+            f'<td align="center" width="33%" bgcolor="{_TILE}" '
+            f'style="background:{_TILE};padding:16px 8px;border:1px solid {_LINE};'
+            f'border-radius:10px">'
             f'<div style="font-size:11px;letter-spacing:.6px;text-transform:uppercase;'
-            f'color:{_MUTED};font-family:Arial,sans-serif">{label}</div>'
-            f'<div style="font-size:28px;font-weight:700;color:{color};'
-            f'font-family:Consolas,monospace;margin-top:4px">{value}</div></td>'
+            f'color:{_SEC};font-family:Arial,Helvetica,sans-serif">{label}</div>'
+            f'<div style="font-size:30px;font-weight:700;color:{color};'
+            f'font-family:Consolas,\'Courier New\',monospace;padding-top:6px">{value}</div></td>'
         )
 
     stats = (
-        '<table role="presentation" width="100%" cellspacing="8" cellpadding="0"><tr>'
-        + stat("Zones", zc)
-        + stat("Snapshots", sc)
-        + stat("Excursions", ec, _BAD if ec else _OK)
-        + "</tr></table>"
+        f'<table role="presentation" width="100%" cellspacing="0" cellpadding="0">'
+        f'<tr>{stat("Zones", zc)}<td width="12"></td>{stat("Snapshots", sc)}'
+        f'<td width="12"></td>{stat("Excursions", ec, _BAD if ec else _OK)}</tr></table>'
     )
 
-    # Excursions block.
     if ec:
         items = "".join(
-            f'<div style="background:#1b1113;border:1px solid #3b1113;border-radius:8px;'
-            f'padding:10px 12px;margin:6px 0;color:#fca5a5;'
-            f'font-family:Consolas,monospace;font-size:13px">'
+            f'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+            f'style="margin:6px 0"><tr><td bgcolor="#2a1416" '
+            f'style="background:#2a1416;border:1px solid #4a2326;border-radius:8px;'
+            f'padding:10px 12px;color:#f3b0b0;font-family:Consolas,monospace;font-size:13px">'
             f'&#9888; {e["zone"]} — {e["metric"].upper()} '
             f'{e["value"]}{"°F" if e["metric"]=="temp" else "%"} outside '
             f'{e["band_lo"]}–{e["band_hi"]}{"°F" if e["metric"]=="temp" else "%"}'
-            f'{(" · " + e["at"]) if e.get("at") else ""}</div>'
+            f'{(" · " + e["at"].replace("T"," ")) if e.get("at") else ""}</td></tr></table>'
             for e in summary.get("excursions", [])
         )
     else:
         items = (
             f'<div style="color:{_OK};font-family:Consolas,monospace;font-size:14px;'
-            f'padding:8px 0">&#10003; All zones within band today.</div>'
+            f'padding:10px 0">&#10003; All zones within band.</div>'
         )
 
-    # Zone rows.
     rows = ""
     for z in summary.get("zones", []):
         bad = z.get("in_band") is False
-        name_color = _BAD if bad else _INK
+        cell = f'padding:9px 8px;border-bottom:1px solid {_LINE};font-family:Consolas,monospace;'
         rows += (
             f'<tr>'
-            f'<td style="padding:9px 8px;border-bottom:1px solid {_LINE};'
-            f'font-family:Consolas,monospace;color:{name_color}">{z["zone"]}</td>'
-            f'<td style="padding:9px 8px;border-bottom:1px solid {_LINE};'
-            f'font-family:Consolas,monospace;color:{_INK}">{_fmt(z["temp"]["latest"])}</td>'
-            f'<td style="padding:9px 8px;border-bottom:1px solid {_LINE};'
-            f'font-family:Consolas,monospace;color:{_INK}">{_fmt(z["rh"]["latest"])}</td>'
-            f'<td style="padding:9px 8px;border-bottom:1px solid {_LINE};'
-            f'font-family:Consolas,monospace;color:{_adh_color(z["temp_adherence"])}">'
-            f'{_fmt(z["temp_adherence"],"%")}</td>'
-            f'<td style="padding:9px 8px;border-bottom:1px solid {_LINE};'
-            f'font-family:Consolas,monospace;color:{_adh_color(z["rh_adherence"])}">'
-            f'{_fmt(z["rh_adherence"],"%")}</td>'
+            f'<td style="{cell}color:{_BAD if bad else _INK}">{z["zone"]}</td>'
+            f'<td style="{cell}color:{_INK}">{_fmt(z["temp"]["latest"])}</td>'
+            f'<td style="{cell}color:{_INK}">{_fmt(z["rh"]["latest"])}</td>'
+            f'<td style="{cell}color:{_adh_color(z["temp_adherence"])}">{_fmt(z["temp_adherence"],"%")}</td>'
+            f'<td style="{cell}color:{_adh_color(z["rh_adherence"])}">{_fmt(z["rh_adherence"],"%")}</td>'
             f'</tr>'
         )
     ztable = (
         f'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
-        f'style="border-collapse:collapse;font-size:13px">'
-        f'<tr>'
+        f'style="border-collapse:collapse;font-size:13px"><tr>'
         + "".join(
             f'<th align="left" style="padding:8px;color:{_MUTED};font-size:11px;'
-            f'text-transform:uppercase;letter-spacing:.5px;'
-            f'border-bottom:1px solid {_LINE};font-family:Arial,sans-serif">{h}</th>'
+            f'text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid {_LINE};'
+            f'font-family:Arial,Helvetica,sans-serif">{h}</th>'
             for h in ("AHU", "Temp °F", "RH %", "Temp adh.", "RH adh.")
         )
-        + "</tr>"
-        + rows
-        + "</table>"
+        + "</tr>" + rows + "</table>"
     )
+
+    def section(title):
+        return (
+            f'<div style="color:{_SEC};font-size:12px;text-transform:uppercase;'
+            f'letter-spacing:.8px;font-family:Arial,Helvetica,sans-serif;'
+            f'border-bottom:1px solid {_LINE};padding-bottom:6px;margin-bottom:6px">{title}</div>'
+        )
 
     button = ""
     if dashboard_url:
         button = (
-            f'<div style="text-align:center;margin:26px 0 6px">'
-            f'<a href="{dashboard_url}" style="background:{_TEAL};color:#04201c;'
-            f'text-decoration:none;font-family:Arial,sans-serif;font-weight:700;'
-            f'padding:12px 26px;border-radius:8px;display:inline-block">'
-            f'View full dashboard &rarr;</a></div>'
+            f'<table role="presentation" cellspacing="0" cellpadding="0" style="margin:6px auto">'
+            f'<tr><td bgcolor="{_TEAL}" style="background:{_TEAL};border-radius:8px">'
+            f'<a href="{dashboard_url}" style="display:inline-block;padding:12px 28px;'
+            f'color:#04201c;text-decoration:none;font-weight:700;'
+            f'font-family:Arial,Helvetica,sans-serif;font-size:14px">'
+            f'View full dashboard &rarr;</a></td></tr></table>'
         )
 
-    return f"""<!doctype html><html><body style="margin:0;background:{_BG};padding:24px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-<tr><td align="center">
-<table role="presentation" width="640" cellspacing="0" cellpadding="0"
-       style="max-width:640px;width:100%">
-  <tr><td style="padding:4px 4px 18px">
-    <div style="font-size:22px;font-weight:700;color:{_INK};font-family:Arial,sans-serif">
-      art<span style="color:{_TEAL}">heart</span>
-      <span style="color:{_MUTED};font-weight:400;font-size:14px"> — Gallery Conditions</span>
-    </div>
-    <div style="color:{_MUTED};font-family:Consolas,monospace;font-size:13px;margin-top:4px">
-      {date} · {sc} snapshot(s)</div>
-  </td></tr>
-  <tr><td style="padding:0 4px">{stats}</td></tr>
-  <tr><td style="padding:22px 4px 4px">
-    <div style="color:{_MUTED};font-size:12px;text-transform:uppercase;letter-spacing:.8px;
-                font-family:Arial,sans-serif;border-bottom:1px solid {_LINE};padding-bottom:6px">
-      Excursions (temp 68–72 °F · RH 45–55 %)</div>
-    {items}
-  </td></tr>
-  <tr><td style="padding:22px 4px 4px">
-    <div style="color:{_MUTED};font-size:12px;text-transform:uppercase;letter-spacing:.8px;
-                font-family:Arial,sans-serif;border-bottom:1px solid {_LINE};padding-bottom:6px">
-      Zones (by AHU)</div>
-    {ztable}
-  </td></tr>
-  <tr><td>{button}</td></tr>
-  <tr><td style="padding:20px 4px;color:{_MUTED};font-family:Consolas,monospace;
-                 font-size:11px;text-align:center">
-    artheart · CBMAA gallery-condition aggregator</td></tr>
-</table>
+    return f"""<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<style>:root{{color-scheme:dark;}} body{{margin:0;background:{_BG};}}</style>
+</head>
+<body bgcolor="{_BG}" style="margin:0;background:{_BG};">
+<table role="presentation" width="100%" bgcolor="{_BG}" cellspacing="0" cellpadding="0"
+       style="background:{_BG}"><tr>
+<td align="center" style="padding:24px 16px">
+  <table role="presentation" width="600" bgcolor="{_CARD}" cellspacing="0" cellpadding="0"
+         style="max-width:600px;width:100%;background:{_CARD};border:1px solid {_LINE};border-radius:12px">
+    <tr><td style="padding:22px 22px 10px">
+      <div style="font-size:24px;font-weight:800;color:{_INK};font-family:Arial,Helvetica,sans-serif">
+        art<span style="color:{_TEAL}">heart</span></div>
+      <div style="color:{_SEC};font-family:Arial,Helvetica,sans-serif;font-size:13px;padding-top:2px">
+        Gallery Conditions</div>
+      <div style="color:{_MUTED};font-family:Consolas,monospace;font-size:13px;padding-top:8px">
+        {date} &nbsp;·&nbsp; {sc} snapshot(s)</div>
+    </td></tr>
+    <tr><td style="padding:6px 18px 4px">{stats}</td></tr>
+    <tr><td style="padding:20px 22px 4px">{section("Excursions (temp 68–72 °F · RH 45–55 %)")}{items}</td></tr>
+    <tr><td style="padding:16px 22px 4px">{section("Zones (by AHU)")}{ztable}</td></tr>
+    <tr><td style="padding:18px 22px 6px">{button}</td></tr>
+    <tr><td style="padding:14px 22px 22px;color:{_MUTED};font-family:Consolas,monospace;
+                   font-size:11px;text-align:center">
+      artheart · CBMAA gallery-condition aggregator</td></tr>
+  </table>
 </td></tr></table>
 </body></html>"""
 

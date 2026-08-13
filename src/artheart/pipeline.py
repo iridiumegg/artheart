@@ -39,8 +39,13 @@ def run(*, do_ingest: bool = True) -> dict:
     else:
         print("ingest: skipped (no IMAP credentials configured)")
 
+    # Summarize the latest day that actually has data (falls back to today).
+    # Reports may arrive across the day, or a run may fire before the day's
+    # reports land — either way the digest should show the most recent readings.
+    dates = aggregate.all_dates(data)
     today = _today_local()
-    summary = aggregate.daily_summary(data, today)
+    report_date = today if today in dates else (dates[-1] if dates else today)
+    summary = aggregate.daily_summary(data, report_date)
 
     os.makedirs(config.SITE_DATA_DIR, exist_ok=True)
     _write_json(os.path.join(config.SITE_DATA_DIR, "summary.json"), summary)

@@ -29,7 +29,9 @@ DATA_FILE = os.environ.get("ARTHEART_DATA_FILE", "data/readings.json")
 SITE_DATA_DIR = os.environ.get("ARTHEART_SITE_DATA", "site/data")
 
 # --- Dashboard / email (Gmail SMTP; reuses the IMAP App Password) --------------
-DASHBOARD_URL = os.environ.get("ARTHEART_DASHBOARD_URL", "")
+DASHBOARD_URL = os.environ.get(
+    "ARTHEART_DASHBOARD_URL", "https://iridiumegg.github.io/artheart/"
+)
 SMTP_HOST = os.environ.get("ARTHEART_SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("ARTHEART_SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("ARTHEART_SMTP_USER", "") or IMAP_USER

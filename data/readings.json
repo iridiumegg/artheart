@@ -510,6 +510,114 @@
       "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery 2",
       "gmail_msg_id": "<370040665.16.1786636809278@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "CBMAA Main / Basement / AHU / AHU 14",
+      "generated_at": "2026-08-13T15:00:03",
+      "readings": [
+        {
+          "zone": "AHU 2",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 4",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 8",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 74.6
+        },
+        {
+          "zone": "AHU 13",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 14",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 71.2
+        },
+        {
+          "zone": "AHU 15",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 71.3
+        },
+        {
+          "zone": "AHU 19",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 72.0
+        },
+        {
+          "zone": "AHU-18",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 70.5
+        }
+      ],
+      "parse_confidence": 0.8,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<1205816448.30.1786651203568@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / 2nd Floor / AHU 1",
+      "generated_at": "2026-08-13T15:00:09",
+      "readings": [
+        {
+          "zone": "AHU 2",
+          "rh": 51.7,
+          "rh_ts": "2026-08-13T14:57:45",
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 4",
+          "rh": 48.2,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 8",
+          "rh": 49.5,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 74.6
+        },
+        {
+          "zone": "AHU 13",
+          "rh": 50.1,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 14",
+          "rh": 43.0,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 71.2
+        },
+        {
+          "zone": "AHU 15",
+          "rh": 49.9,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 71.3
+        },
+        {
+          "zone": "AHU 19",
+          "rh": 46.9,
+          "rh_ts": "2026-08-13T15:00:00",
+          "temp_f": 72.0
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery 3",
+      "gmail_msg_id": "<721809635.32.1786651209375@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

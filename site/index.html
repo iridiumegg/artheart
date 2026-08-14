@@ -72,6 +72,10 @@
   svg .band{fill:rgba(61,214,200,.07)}
   .legend{display:flex;gap:16px;font-size:12px;color:var(--sec);font-family:var(--mono);margin-bottom:6px}
   .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .legend2{display:flex;flex-wrap:wrap;gap:6px 14px;margin-bottom:10px}
+  .legend2 span{font-family:var(--mono);font-size:12px;color:var(--sec);display:inline-flex;align-items:center;gap:6px}
+  .legend2 i{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .uh{color:var(--sec);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin:12px 0 2px}
   .exc{background:#160f14;border:1px solid #3b1113;border-radius:var(--r-md);padding:10px 12px;
     margin:8px 0;color:#f2a3a3;font-family:var(--mono);font-size:13px;display:flex;gap:10px;align-items:center}
   .exc b{color:#ffd0d0}
@@ -102,6 +106,8 @@
 </div>
 <script>
 const C={teal:"#3dd6c8",blue:"#4fa3e0",error:"#e05656",muted:"#4d6a85",sec:"#8baec8",ink:"#fff"};
+// Colorblind-safe categorical hues (Okabe–Ito) for the per-AHU Unit Overview.
+const CAT=["#e69f00","#56b4e9","#009e73","#f0e442","#0072b2","#d55e00","#cc79a7","#3dd6c8"];
 const tip=document.getElementById("tip");
 const fmt=(v,u="")=>v==null?"—":`${v}${u}`;
 let pinnedEl=null;                       // a mark whose tooltip is held open by a tap/click
@@ -170,6 +176,12 @@ function render(){
       <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">
       (temp 68–72 °F · RH 45–55 %)</span></div>
     <div class="zones" id="zones"></div>
+    <div class="card"><div class="label">Unit Overview — all captures
+      <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">
+      (every AHU, each email capture)</span></div>
+      <div id="unit-legend" class="legend2"></div>
+      <div class="uh">Temperature °F</div><div id="unit-temp"></div>
+      <div class="uh">Humidity %</div><div id="unit-rh"></div></div>
     <div class="card"><div class="label">Excursion log — ${DATE}</div><div id="exc"></div></div>
     ${tableView(day)}
   `;
@@ -177,6 +189,7 @@ function render(){
   drawHeat(document.getElementById("heat"),zones);
   const zc=document.getElementById("zones");
   zones.forEach(z=>zc.appendChild(zoneCard(z)));
+  drawUnit();
   const el=document.getElementById("exc");
   el.innerHTML = exc.length ? exc.map(e=>{
     const u=e.metric==="temp"?"°F":"%";
@@ -306,6 +319,62 @@ function drawHeat(host,zones){
   host.querySelectorAll("rect").forEach(r=>{
     bindTip(r, ()=>`<b>${r.dataset.z}</b> · ${r.dataset.m}<br>${r.dataset.p}% in band`);
   });
+}
+
+/* ---- Unit Overview: all AHUs, temp & humidity, every capture over time ---- */
+function _zoneSort(a,b){
+  const pa=a.split(" "),pb=b.split(" ");
+  if(pa.length===2&&pb.length===2&&/^\d+$/.test(pa[1])&&/^\d+$/.test(pb[1])) return pa[1]-pb[1];
+  return a<b?-1:1;
+}
+function buildUnitSeries(){
+  const zset=new Set();
+  DATA.dates.forEach(d=>(DATA.days[d].zones||[]).forEach(z=>zset.add(z.zone)));
+  const ahus=[...zset].sort(_zoneSort);
+  const colors={}; ahus.forEach((z,i)=>colors[z]=CAT[i%CAT.length]);
+  const caps=[];                               // one entry per email capture, chronological
+  DATA.dates.forEach(d=>[...new Set(DATA.days[d].generated_at_list||[])].sort()
+    .forEach(at=>caps.push({date:d,at})));
+  const idx={}; caps.forEach((c,i)=>idx[c.date+"|"+c.at]=i);
+  const temp={},rh={}; ahus.forEach(z=>{temp[z]=[];rh[z]=[];});
+  DATA.dates.forEach(d=>(DATA.days[d].zones||[]).forEach(z=>{
+    (z.temp_series||[]).forEach(p=>{const i=idx[d+"|"+p.at]; if(i!=null&&p.value!=null)temp[z.zone].push({i,at:p.at,v:p.value});});
+    (z.rh_series||[]).forEach(p=>{const i=idx[d+"|"+p.at]; if(i!=null&&p.value!=null)rh[z.zone].push({i,at:p.at,v:p.value});});
+  }));
+  return {ahus,colors,caps,
+    temp:ahus.map(z=>({name:z,color:colors[z],points:temp[z]})),
+    rh:ahus.map(z=>({name:z,color:colors[z],points:rh[z]}))};
+}
+function multiLine(host, series, band, unit, caps){
+  const N=caps.length, W=560,H=200,PL=32,PR=14,PT=10,PB=24, iw=W-PL-PR, ih=H-PT-PB;
+  const X=i=> N<=1?PL+iw/2 : PL+iw*i/(N-1);
+  const vals=series.flatMap(s=>s.points.map(p=>p.v));
+  let lo=Math.min(band[0], ...(vals.length?vals:[band[0]]))-1;
+  let hi=Math.max(band[1], ...(vals.length?vals:[band[1]]))+1;
+  if(hi-lo<3){lo-=1.5;hi+=1.5;}
+  const Y=v=>PT+ih-ih*(v-lo)/(hi-lo);
+  const by0=Y(band[1]),by1=Y(band[0]);
+  let s=`<rect class="band" x="${PL}" y="${by0.toFixed(1)}" width="${iw}" height="${(by1-by0).toFixed(1)}"/>`;
+  [band[0],band[1]].forEach(b=> s+=`<line class="grid" x1="${PL}" y1="${Y(b).toFixed(1)}" x2="${PL+iw}" y2="${Y(b).toFixed(1)}"/><text class="axis" x="4" y="${(Y(b)+3).toFixed(1)}">${b}</text>`);
+  series.forEach(se=>{
+    if(se.points.length>1){
+      const dp=se.points.map((p,k)=>`${k?"L":"M"}${X(p.i).toFixed(1)},${Y(p.v).toFixed(1)}`).join(" ");
+      s+=`<path d="${dp}" fill="none" stroke="${se.color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity="0.92"/>`;
+    }
+    se.points.forEach(p=> s+=`<circle cx="${X(p.i).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="3" fill="${se.color}" stroke="var(--card)" stroke-width="1" data-z="${se.name}" data-at="${p.at}" data-v="${p.v}"/>`);
+  });
+  if(N){ s+=`<text class="axis" x="${PL}" y="${H-6}">${caps[0].date}</text>`;
+         s+=`<text class="axis" x="${PL+iw}" y="${H-6}" text-anchor="end">${caps[N-1].date}</text>`; }
+  host.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${s}</svg>`;
+  host.querySelectorAll("circle").forEach(c=>
+    bindTip(c, ()=>`<b>${c.dataset.z}</b> · ${c.dataset.at.replace("T"," ")}<br>${c.dataset.v}${unit}`));
+}
+function drawUnit(){
+  const u=buildUnitSeries();
+  document.getElementById("unit-legend").innerHTML =
+    u.ahus.map(z=>`<span><i style="background:${u.colors[z]}"></i>${z}</span>`).join("");
+  multiLine(document.getElementById("unit-temp"), u.temp, DATA.temp_band||[68,72], "°F", u.caps);
+  multiLine(document.getElementById("unit-rh"),   u.rh,   DATA.rh_band||[45,55], "%",  u.caps);
 }
 
 /* ---- accessible table view ---- */

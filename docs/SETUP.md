@@ -47,7 +47,7 @@ There is **nothing to set up** beyond the App Password above: the digest is sent
 over Gmail SMTP using the same `ARTHEART_IMAP_PASSWORD`, from your Gmail account,
 to `ARTHEART_EMAIL_TO` (or yourself by default). No Resend, no custom domain.
 
-The digest sends automatically at ~10 PM Central (after the day's last report).
+The digest sends automatically at ~6 AM Central as a recap of the previous day.
 To test off-hours, run the
 workflow manually with the repo/env variable `ARTHEART_FORCE_EMAIL=true`, or
 run `ARTHEART_FORCE_EMAIL=true python -m artheart.pipeline` locally.
@@ -59,7 +59,7 @@ run `ARTHEART_FORCE_EMAIL=true python -m artheart.pipeline` locally.
 - **Cadence:** the workflow polls the inbox **every ~15 min**. When a new report
   email is found it ingests it and **redeploys the dashboard** (runs with no new
   mail are no-ops and skip the deploy). The **email digest** still goes out
-  **once per day at ~10 PM Central** (a per-day marker keeps the frequent polls
+  **once per day at ~6 AM Central, recapping the prior day** (a per-day marker keeps the frequent polls
   from sending duplicates).
 - A manual run always rebuilds and deploys; tick **force email** to also send
   the digest immediately.

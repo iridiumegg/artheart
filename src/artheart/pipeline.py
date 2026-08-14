@@ -62,21 +62,26 @@ def run(*, do_ingest: bool = True) -> dict:
     print(f"summary: {report_date} -> {summary['snapshot_count']} snapshot(s), "
           f"{summary['zone_count']} zone(s), {summary['excursion_count']} excursion(s)")
 
-    # Email digest: once per day at/after SEND_HOUR local. The dashboard now
-    # updates on every poll, but the digest stays daily — a per-day marker keeps
-    # the frequent polls from sending duplicates. FORCE_EMAIL bypasses for tests
-    # (and does not consume the day's slot).
+    # Email digest: a 6am recap of the PREVIOUS day. The live dashboard keeps
+    # showing today's data as it arrives, but the morning email summarizes the
+    # most recent day before today (so it's yesterday's complete 7am-9pm span,
+    # and stays yesterday's even if the 6am run is delayed past the 7am report).
+    # Sent once per day (per-day marker); FORCE_EMAIL bypasses without consuming
+    # the day's slot.
     smtp_pw = os.environ.get("ARTHEART_SMTP_PASSWORD") or os.environ.get("ARTHEART_IMAP_PASSWORD")
-    today = _today_local()
     already_sent = _email_marker() == today
     due = _local_hour() >= config.SEND_HOUR and not already_sent
     if smtp_pw and config.EMAIL_TO and (config.FORCE_EMAIL or due):
+        prior = [d for d in dates if d < today]
+        email_date = prior[-1] if prior else report_date
+        email_summary = summary if email_date == report_date else \
+            aggregate.daily_summary(data, email_date)
         try:
             from . import email_digest
-            email_digest.send(summary)
+            email_digest.send(email_summary)
             if not config.FORCE_EMAIL:
                 _write_email_marker(today)
-            print("email: digest sent")
+            print(f"email: digest sent (recap of {email_date})")
         except Exception as exc:  # never let email failure fail the run
             print(f"email: skipped ({exc})")
     else:

@@ -5,10 +5,10 @@ import os
 
 # --- Scheduling ---------------------------------------------------------------
 TIMEZONE = os.environ.get("ARTHEART_TZ", "America/Chicago")
-# Local hour to email the daily digest. Reports arrive 7am–9pm (every 2h), so
-# send at 10pm to capture the full day (the digest fires once, at the first
-# poll at/after this hour).
-SEND_HOUR = int(os.environ.get("ARTHEART_SEND_HOUR", "22"))
+# Local hour to email the daily digest. Sent at 6am as a recap of the previous
+# day (reports arrive 7am–9pm, so by morning the prior day is complete). The
+# digest fires once, at the first poll at/after this hour.
+SEND_HOUR = int(os.environ.get("ARTHEART_SEND_HOUR", "6"))
 
 # --- Condition target bands ---------------------------------------------------
 DEFAULT_TEMP_BAND = (68.0, 72.0)   # deg F  (CBMAA confirmed)

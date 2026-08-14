@@ -126,7 +126,7 @@ outgrows a flat file (years away at this rate).
   - **Excursion log** (derived) with severity
   - **Gallery heatmap** (zone × metric, green→red vs band)
 
-**5. Email out — 18:15 America/Chicago**
+**5. Email out — ~22:00 America/Chicago (after the day's last report)**
 - A step in the Actions run → send via **Resend** (or Postmark).
 - Email = headline stats + **static snapshot image** of the key chart +
   **link to the live dashboard**. Useful at a glance, rich on click.
@@ -152,7 +152,7 @@ GitHub Pages (public dashboard). Single platform, ~$0, near-zero ops.
 | Storage      | Committed `data/readings.json` in the repo (name-scrubbed) |
 | Raw PDFs     | Left in Gmail (not committed to the public repo) |
 | Dashboard    | Static GitHub Pages site, client-side interactive charts |
-| Scheduler    | GitHub Actions poll every ~15 min (deploy on change); email once/day ~18:00 CT |
+| Scheduler    | GitHub Actions poll every ~15 min (deploy on change); email once/day ~22:00 CT |
 | Hosting      | GitHub Actions + repo + GitHub Pages (all public, ~$0) |
 
 ## 5. Build phases

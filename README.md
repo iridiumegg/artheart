@@ -2,7 +2,7 @@
 
 Daily aggregator for CBMAA gallery-condition reports. Intercepts the WebCTRL
 snapshot PDFs emailed throughout the day, stores the readings, and publishes an
-interactive ES2-branded dashboard with a 6 PM Central email digest.
+interactive ES2-branded dashboard with a nightly (~10 PM Central) email digest.
 
 See [DESIGN.md](DESIGN.md) for the full architecture and build phases.
 

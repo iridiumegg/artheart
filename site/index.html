@@ -180,8 +180,8 @@ function render(){
       <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400">
       (every AHU, each email capture)</span></div>
       <div id="unit-legend" class="legend2"></div>
-      <div class="uh">Temperature °F</div><div id="unit-temp"></div>
-      <div class="uh">Humidity %</div><div id="unit-rh"></div></div>
+      <div class="uh">Temperature °F · band ${(DATA.temp_band||[68,72]).join("–")} · scale 0–100</div><div id="unit-temp"></div>
+      <div class="uh">Humidity % · band ${(DATA.rh_band||[45,55]).join("–")} · scale 0–100</div><div id="unit-rh"></div></div>
     <div class="card"><div class="label">Excursion log — ${DATE}</div><div id="exc"></div></div>
     ${tableView(day)}
   `;
@@ -348,14 +348,13 @@ function buildUnitSeries(){
 function multiLine(host, series, band, unit, caps){
   const N=caps.length, W=560,H=200,PL=32,PR=14,PT=10,PB=24, iw=W-PL-PR, ih=H-PT-PB;
   const X=i=> N<=1?PL+iw/2 : PL+iw*i/(N-1);
-  const vals=series.flatMap(s=>s.points.map(p=>p.v));
-  let lo=Math.min(band[0], ...(vals.length?vals:[band[0]]))-1;
-  let hi=Math.max(band[1], ...(vals.length?vals:[band[1]]))+1;
-  if(hi-lo<3){lo-=1.5;hi+=1.5;}
+  const lo=0, hi=100;                        // fixed full-scale axis so nothing clips
   const Y=v=>PT+ih-ih*(v-lo)/(hi-lo);
   const by0=Y(band[1]),by1=Y(band[0]);
   let s=`<rect class="band" x="${PL}" y="${by0.toFixed(1)}" width="${iw}" height="${(by1-by0).toFixed(1)}"/>`;
-  [band[0],band[1]].forEach(b=> s+=`<line class="grid" x1="${PL}" y1="${Y(b).toFixed(1)}" x2="${PL+iw}" y2="${Y(b).toFixed(1)}"/><text class="axis" x="4" y="${(Y(b)+3).toFixed(1)}">${b}</text>`);
+  // faint band edges for context, then the 0/50/100 scale
+  [band[0],band[1]].forEach(b=> s+=`<line x1="${PL}" y1="${Y(b).toFixed(1)}" x2="${PL+iw}" y2="${Y(b).toFixed(1)}" stroke="var(--teal)" stroke-opacity="0.25" stroke-width="1"/>`);
+  [0,50,100].forEach(b=> s+=`<line class="grid" x1="${PL}" y1="${Y(b).toFixed(1)}" x2="${PL+iw}" y2="${Y(b).toFixed(1)}"/><text class="axis" x="4" y="${(Y(b)+3).toFixed(1)}">${b}</text>`);
   series.forEach(se=>{
     if(se.points.length>1){
       const dp=se.points.map((p,k)=>`${k?"L":"M"}${X(p.i).toFixed(1)},${Y(p.v).toFixed(1)}`).join(" ");

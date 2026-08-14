@@ -2,7 +2,16 @@
 import os
 from datetime import datetime
 
-from artheart.parser import parse_report, find_excursions
+from artheart.parser import parse_report, find_excursions, normalize_zone
+
+
+def test_normalize_zone():
+    assert normalize_zone("AHU 13 (Gallery 3/4)") == "AHU 13"
+    assert normalize_zone("AHU 15 (Gallery 5 East Box)") == "AHU 15"
+    assert normalize_zone("AHU-18 (Gallery 6 N)") == "AHU 18"
+    assert normalize_zone("AHU-18") == "AHU 18"
+    assert normalize_zone("AHU 2") == "AHU 2"        # already clean, unchanged
+    assert normalize_zone("  AHU  4  ") == "AHU 4"
 
 SAMPLE = os.path.join(os.path.dirname(__file__), "samples", "CBMAA_Gallery_2_sample.pdf")
 

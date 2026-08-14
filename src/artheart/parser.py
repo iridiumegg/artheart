@@ -61,6 +61,16 @@ def _parse_float(raw: Optional[str]) -> Optional[float]:
     return float(raw) if _FLOAT_RE.match(raw) else None
 
 
+def normalize_zone(name: Optional[str]) -> str:
+    """Canonical AHU label: strip any '(descriptor)' and unify the separator.
+
+    'AHU 13 (Gallery 3/4)' -> 'AHU 13',  'AHU-18 (Gallery 6 N)' -> 'AHU 18'.
+    """
+    name = (name or "").split("(", 1)[0].strip()
+    name = re.sub(r"^AHU\s*-\s*", "AHU ", name)
+    return re.sub(r"\s+", " ", name).strip()
+
+
 def parse_report(path: str) -> Report:
     """Parse a WebCTRL gallery-condition PDF into a structured Report."""
     report = Report()
@@ -98,7 +108,7 @@ def parse_report(path: str) -> Report:
         for row in tables[0][1:]:  # skip header
             if not row or not (row[0] or "").strip():
                 continue
-            zone = row[0].strip()
+            zone = normalize_zone(row[0])
             rh, rh_ts = None, None
             hm = _HUMIDITY_RE.match((row[1] or "").strip()) if len(row) > 1 else None
             if hm:

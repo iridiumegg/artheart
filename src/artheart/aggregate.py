@@ -39,10 +39,12 @@ def daily_summary(store: dict[str, Any], date_str: str) -> dict[str, Any]:
     reports.sort(key=lambda r: r.get("generated_at") or "")
 
     # zone -> ordered lists of readings across the day's snapshots
+    from .parser import normalize_zone  # canonical AHU-name cleaner (single source)
+
     by_zone: dict[str, dict[str, list]] = {}
     for rep in reports:
         for rd in rep.get("readings", []):
-            z = by_zone.setdefault(rd["zone"], {"temp": [], "rh": [], "ts": []})
+            z = by_zone.setdefault(normalize_zone(rd["zone"]), {"temp": [], "rh": [], "ts": []})
             z["temp"].append(rd.get("temp_f"))
             z["rh"].append(rd.get("rh"))
             z["ts"].append(rep.get("generated_at"))

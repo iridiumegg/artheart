@@ -4,9 +4,41 @@ Dependency-free so it tests without pdfplumber.
 """
 from __future__ import annotations
 
+import re
 from typing import Any, Optional
 
 from . import config
+
+_AHU_RE = re.compile(r"AHU\s*-?\s*(\d+)")
+
+
+def _ahu_num(name: str) -> Optional[int]:
+    m = _AHU_RE.search(name or "")
+    return int(m.group(1)) if m else None
+
+
+def canonical_names(store: dict[str, Any]) -> dict[int, str]:
+    """Map each AHU number to its email-style label — the descriptored name
+    (e.g. 'AHU 13 (Gallery 3/4)') when the reports provide one, else the plain
+    name. Lets old plain-named history fold into the current descriptored unit."""
+    desc: dict[int, str] = {}
+    plain: dict[int, str] = {}
+    for rep in store.get("reports", []):
+        for rd in rep.get("readings", []):
+            z = (rd.get("zone") or "").strip()
+            n = _ahu_num(z)
+            if n is None:
+                continue
+            if "(" in z:
+                desc[n] = z            # later reports win -> latest descriptor
+            else:
+                plain.setdefault(n, z)
+    return {n: desc.get(n) or plain.get(n) for n in set(desc) | set(plain)}
+
+
+def _display_name(zone: str, canon: dict[int, str]) -> str:
+    n = _ahu_num(zone)
+    return canon.get(n, (zone or "").strip()) if n is not None else (zone or "").strip()
 
 
 def _in_band(value: Optional[float], band: tuple[float, float]) -> Optional[bool]:
@@ -39,12 +71,12 @@ def daily_summary(store: dict[str, Any], date_str: str) -> dict[str, Any]:
     reports.sort(key=lambda r: r.get("generated_at") or "")
 
     # zone -> ordered lists of readings across the day's snapshots
-    from .parser import normalize_zone  # canonical AHU-name cleaner (single source)
+    canon = canonical_names(store)  # fold plain/descriptored duplicates into one name
 
     by_zone: dict[str, dict[str, list]] = {}
     for rep in reports:
         for rd in rep.get("readings", []):
-            z = by_zone.setdefault(normalize_zone(rd["zone"]), {"temp": [], "rh": [], "ts": []})
+            z = by_zone.setdefault(_display_name(rd["zone"], canon), {"temp": [], "rh": [], "ts": []})
             z["temp"].append(rd.get("temp_f"))
             z["rh"].append(rd.get("rh"))
             z["ts"].append(rep.get("generated_at"))
@@ -139,8 +171,7 @@ def _adherence(flags: list[Optional[bool]]) -> Optional[float]:
 
 
 def _zone_sort_key(zone: str):
-    # "AHU 13" -> (13,) so numeric AHUs sort naturally, not lexically.
-    parts = zone.split()
-    if len(parts) == 2 and parts[1].isdigit():
-        return (0, int(parts[1]))
-    return (1, zone)
+    # Sort by the AHU number regardless of descriptor/hyphen, e.g.
+    # "AHU 13 (Gallery 3/4)" -> 13, "AHU-18 (Gallery 6 N)" -> 18.
+    n = _ahu_num(zone)
+    return (0, n) if n is not None else (1, zone)

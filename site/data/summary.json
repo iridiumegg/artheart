@@ -11,7 +11,7 @@
   "excursion_count": 3,
   "zones": [
     {
-      "zone": "AHU 2",
+      "zone": "AHU 2 (Gallery 8a)",
       "samples": 4,
       "temp": {
         "min": 69.2,
@@ -74,7 +74,7 @@
       "in_band": true
     },
     {
-      "zone": "AHU 4",
+      "zone": "AHU 4 (Vault)",
       "samples": 4,
       "temp": {
         "min": 69.1,
@@ -184,7 +184,7 @@
       "in_band": false
     },
     {
-      "zone": "AHU 13",
+      "zone": "AHU 13 (Gallery 3/4)",
       "samples": 4,
       "temp": {
         "min": 69.9,
@@ -247,7 +247,7 @@
       "in_band": true
     },
     {
-      "zone": "AHU 14",
+      "zone": "AHU 14 (5 Bridge S)",
       "samples": 4,
       "temp": {
         "min": 69.9,
@@ -310,7 +310,7 @@
       "in_band": true
     },
     {
-      "zone": "AHU 15",
+      "zone": "AHU 15 (Gallery 5 East Box)",
       "samples": 4,
       "temp": {
         "min": 71.0,
@@ -373,7 +373,7 @@
       "in_band": false
     },
     {
-      "zone": "AHU 18",
+      "zone": "AHU-18 (Gallery 6 N)",
       "samples": 3,
       "temp": {
         "min": 69.2,
@@ -428,7 +428,7 @@
       "in_band": true
     },
     {
-      "zone": "AHU 19",
+      "zone": "AHU 19 (Gallery 6 S)",
       "samples": 4,
       "temp": {
         "min": 70.9,
@@ -501,7 +501,7 @@
       "band_hi": 72.0
     },
     {
-      "zone": "AHU 15",
+      "zone": "AHU 15 (Gallery 5 East Box)",
       "metric": "temp",
       "value": 72.1,
       "at": "2026-08-14T13:00:02",
@@ -509,7 +509,7 @@
       "band_hi": 72.0
     },
     {
-      "zone": "AHU 15",
+      "zone": "AHU 15 (Gallery 5 East Box)",
       "metric": "temp",
       "value": 72.9,
       "at": "2026-08-14T15:00:07",

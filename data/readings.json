@@ -1338,6 +1338,57 @@
       "parse_confidence": 0.8,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<17529641.111.1786881610647@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "CBMAA Main / Basement / AHU / AHU 12 (Bldg 3 Class/Office)",
+      "generated_at": "2026-08-16T09:00:08",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.0
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 70.2
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 71.2
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 70.8
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.9
+        }
+      ],
+      "parse_confidence": 0.8,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<702191685.115.1786888808122@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

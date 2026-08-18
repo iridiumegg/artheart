@@ -7,48 +7,48 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.1
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 52.7,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 50.0,
           "rh_ts": null,
           "temp_f": 72.0
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 49.2,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 47.6,
           "rh_ts": null,
           "temp_f": 71.9
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 46.0,
           "rh_ts": null,
           "temp_f": null
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1096627428.771.1786449613328@WebCTRL.nwacc.arvest.com>"
     },
@@ -109,48 +109,48 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 49.5,
           "rh_ts": null,
           "temp_f": 72.7
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 69.4
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 46.5,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 51.6,
           "rh_ts": null,
           "temp_f": 70.4
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 45.2,
           "rh_ts": null,
           "temp_f": null
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1585082335.784.1786478403936@WebCTRL.nwacc.arvest.com>"
     },
@@ -211,48 +211,48 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.3
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 52.1,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 46.6,
           "rh_ts": null,
           "temp_f": 69.4
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 52.4,
           "rh_ts": null,
           "temp_f": 69.9
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 50.0,
           "rh_ts": null,
           "temp_f": 70.8
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 45.5,
           "rh_ts": null,
           "temp_f": null
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<582327164.805.1786536004682@WebCTRL.nwacc.arvest.com>"
     },
@@ -313,48 +313,48 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.5
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 47.1,
           "rh_ts": null,
           "temp_f": 72.0
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 46.4,
           "rh_ts": null,
           "temp_f": 71.5
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 47.5,
           "rh_ts": null,
           "temp_f": 72.0
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 45.5,
           "rh_ts": null,
           "temp_f": null
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1359652830.825.1786564878087@WebCTRL.nwacc.arvest.com>"
     },
@@ -415,19 +415,19 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 51.1,
           "rh_ts": null,
           "temp_f": 70.1
         },
@@ -439,24 +439,24 @@
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.6
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 50.2,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 45.2,
           "rh_ts": null,
           "temp_f": null
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 0.97,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<557296071.10.1786622408556@WebCTRL.nwacc.arvest.com>"
     },
@@ -517,54 +517,54 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 54.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 49.5,
           "rh_ts": null,
           "temp_f": 74.6
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 69.9
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 46.4,
           "rh_ts": null,
           "temp_f": 71.2
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 71.3
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 44.6,
           "rh_ts": null,
           "temp_f": 72.0
         },
         {
           "zone": "AHU-18",
-          "rh": null,
+          "rh": 50.4,
           "rh_ts": null,
           "temp_f": 70.5
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1205816448.30.1786651203568@WebCTRL.nwacc.arvest.com>"
     },
@@ -625,54 +625,54 @@
       "readings": [
         {
           "zone": "AHU 2",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 8",
-          "rh": null,
+          "rh": 45.9,
           "rh_ts": null,
           "temp_f": 71.8
         },
         {
           "zone": "AHU 13",
-          "rh": null,
+          "rh": 47.1,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14",
-          "rh": null,
+          "rh": 49.3,
           "rh_ts": null,
           "temp_f": 69.9
         },
         {
           "zone": "AHU 15",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 19",
-          "rh": null,
+          "rh": 44.9,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18",
-          "rh": null,
+          "rh": 49.0,
           "rh_ts": null,
           "temp_f": 69.2
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<681550178.49.1786708806114@WebCTRL.nwacc.arvest.com>"
     },
@@ -733,48 +733,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.3
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.1,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 46.6,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.7,
           "rh_ts": null,
           "temp_f": 72.1
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 70.9
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.5,
           "rh_ts": null,
           "temp_f": 70.5
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<681694267.61.1786730403003@WebCTRL.nwacc.arvest.com>"
     },
@@ -784,48 +784,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 46.0,
           "rh_ts": null,
           "temp_f": 72.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 72.9
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.1,
           "rh_ts": null,
           "temp_f": 71.1
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 50.6,
           "rh_ts": null,
           "temp_f": 70.8
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<387690742.63.1786737608777@WebCTRL.nwacc.arvest.com>"
     },
@@ -835,48 +835,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 45.9,
           "rh_ts": null,
           "temp_f": 72.5
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 73.5
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.8,
           "rh_ts": null,
           "temp_f": 70.9
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 71.0
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1319403740.67.1786744813587@WebCTRL.nwacc.arvest.com>"
     },
@@ -886,48 +886,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.5
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.4,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 46.8,
           "rh_ts": null,
           "temp_f": 71.3
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 73.3
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 70.8
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<2077157015.72.1786759210726@WebCTRL.nwacc.arvest.com>"
     },
@@ -937,48 +937,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.6,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 50.9,
           "rh_ts": null,
           "temp_f": 69.6
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.4,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.0,
           "rh_ts": null,
           "temp_f": 69.2
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1510632093.81.1786795212878@WebCTRL.nwacc.arvest.com>"
     },
@@ -988,48 +988,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.4
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.5,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 49.1,
           "rh_ts": null,
           "temp_f": 70.4
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.3,
           "rh_ts": null,
           "temp_f": 69.9
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1418737669.85.1786802417650@WebCTRL.nwacc.arvest.com>"
     },
@@ -1039,48 +1039,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.1
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 49.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 50.2,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.9,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.5,
           "rh_ts": null,
           "temp_f": 70.3
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery 2",
       "gmail_msg_id": "<192983256.87.1786809612608@WebCTRL.nwacc.arvest.com>"
     },
@@ -1090,48 +1090,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.9,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 45.5,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 48.2,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 70.7
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1984061307.89.1786816813876@WebCTRL.nwacc.arvest.com>"
     },
@@ -1141,48 +1141,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 49.6,
           "rh_ts": null,
           "temp_f": 69.9
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 44.5,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 47.6,
           "rh_ts": null,
           "temp_f": 70.9
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 70.8
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 50.2,
           "rh_ts": null,
           "temp_f": 70.9
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1469943483.93.1786824003187@WebCTRL.nwacc.arvest.com>"
     },
@@ -1192,48 +1192,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.3
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 44.4,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 47.7,
           "rh_ts": null,
           "temp_f": 70.8
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.1,
           "rh_ts": null,
           "temp_f": 70.7
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1764463722.98.1786831211419@WebCTRL.nwacc.arvest.com>"
     },
@@ -1243,48 +1243,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.4
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.0,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 48.2,
           "rh_ts": null,
           "temp_f": 70.3
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 51.1,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.1,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.3,
           "rh_ts": null,
           "temp_f": 70.8
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1598279543.103.1786845602504@WebCTRL.nwacc.arvest.com>"
     },
@@ -1294,48 +1294,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.9,
           "rh_ts": null,
           "temp_f": 69.9
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 49.6,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.2,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.1,
           "rh_ts": null,
           "temp_f": 69.2
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<17529641.111.1786881610647@WebCTRL.nwacc.arvest.com>"
     },
@@ -1345,48 +1345,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.6,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 50.0,
           "rh_ts": null,
           "temp_f": 71.2
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.8,
           "rh_ts": null,
           "temp_f": 70.8
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.4,
           "rh_ts": null,
           "temp_f": 69.9
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<702191685.115.1786888808122@WebCTRL.nwacc.arvest.com>"
     },
@@ -1396,48 +1396,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.2,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 71.5
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.9,
           "rh_ts": null,
           "temp_f": 71.2
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.4,
           "rh_ts": null,
           "temp_f": 70.3
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery 2",
       "gmail_msg_id": "<1507479375.117.1786896013308@WebCTRL.nwacc.arvest.com>"
     },
@@ -1447,48 +1447,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.1,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 45.4,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 48.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.8,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 50.1,
           "rh_ts": null,
           "temp_f": 70.7
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1948047149.119.1786903204783@WebCTRL.nwacc.arvest.com>"
     },
@@ -1498,48 +1498,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.1
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.4,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 45.4,
           "rh_ts": null,
           "temp_f": 70.5
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 48.8,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.8,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.7,
           "rh_ts": null,
           "temp_f": 71.0
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1255535638.121.1786910405289@WebCTRL.nwacc.arvest.com>"
     },
@@ -1549,48 +1549,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 47.9,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.7,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.5,
           "rh_ts": null,
           "temp_f": 71.0
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1288972188.125.1786917614800@WebCTRL.nwacc.arvest.com>"
     },
@@ -1600,48 +1600,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.1
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.0,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 49.9,
           "rh_ts": null,
           "temp_f": 70.4
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 51.6,
           "rh_ts": null,
           "temp_f": 69.7
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 44.9,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.4,
           "rh_ts": null,
           "temp_f": 70.8
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<166977490.129.1786932013619@WebCTRL.nwacc.arvest.com>"
     },
@@ -1651,48 +1651,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.0
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.6,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.2
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 48.4,
           "rh_ts": null,
           "temp_f": 70.4
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.2,
           "rh_ts": null,
           "temp_f": 71.0
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.3,
           "rh_ts": null,
           "temp_f": 69.4
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<589705031.137.1786968013298@WebCTRL.nwacc.arvest.com>"
     },
@@ -1702,48 +1702,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 54.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.1
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.7,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 51.1,
           "rh_ts": null,
           "temp_f": 69.8
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 70.6
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.1,
           "rh_ts": null,
           "temp_f": 71.1
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.8,
           "rh_ts": null,
           "temp_f": 70.2
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1390185829.153.1786975210989@WebCTRL.nwacc.arvest.com>"
     },
@@ -1753,48 +1753,48 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 53.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 52.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 48.5,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 47.8,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.7,
           "rh_ts": null,
           "temp_f": 70.6
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.0,
           "rh_ts": null,
           "temp_f": 71.5
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 49.4,
           "rh_ts": null,
           "temp_f": 70.5
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery 2",
       "gmail_msg_id": "<1919391716.155.1786982408528@WebCTRL.nwacc.arvest.com>"
     },
@@ -1804,54 +1804,54 @@
       "readings": [
         {
           "zone": "AHU 2 (Gallery 8a)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 4 (Vault)",
-          "rh": null,
+          "rh": 51.0,
           "rh_ts": null,
           "temp_f": 69.2
         },
         {
           "zone": "AHU 13 (Gallery 3/4)",
-          "rh": null,
+          "rh": 46.1,
           "rh_ts": null,
           "temp_f": 70.0
         },
         {
           "zone": "AHU 14 (5 Bridge S)",
-          "rh": null,
+          "rh": 47.7,
           "rh_ts": null,
           "temp_f": 70.1
         },
         {
           "zone": "AHU 15 (Gallery 5 East Box)",
-          "rh": null,
+          "rh": 49.3,
           "rh_ts": null,
           "temp_f": 71.3
         },
         {
           "zone": "AHU 19 (Gallery 6 S)",
-          "rh": null,
+          "rh": 45.5,
           "rh_ts": null,
           "temp_f": 71.8
         },
         {
           "zone": "AHU-18 (Gallery 6 N)",
-          "rh": null,
+          "rh": 50.2,
           "rh_ts": null,
           "temp_f": 69.5
         },
         {
           "zone": "AHU 11 (Gallery 2)",
-          "rh": null,
+          "rh": 52.5,
           "rh_ts": null,
           "temp_f": 68.8
         }
       ],
-      "parse_confidence": 0.8,
+      "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1669555487.176.1787072411186@WebCTRL.nwacc.arvest.com>"
     }

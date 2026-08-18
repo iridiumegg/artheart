@@ -21,7 +21,9 @@ ZONE_BANDS: dict[str, dict[str, tuple[float, float]]] = {}
 # --- Email ingest (IMAP; works with personal Gmail + an App Password) ---------
 IMAP_HOST = os.environ.get("ARTHEART_IMAP_HOST", "imap.gmail.com")
 IMAP_USER = os.environ.get("ARTHEART_IMAP_USER", "")        # mailbox that receives reports
-IMAP_MAILBOX = os.environ.get("ARTHEART_IMAP_MAILBOX", "INBOX")
+# Search all mail (not just INBOX) so reports filtered/archived by a Gmail rule
+# are still found. Override with "INBOX" to restrict.
+IMAP_MAILBOX = os.environ.get("ARTHEART_IMAP_MAILBOX", "[Gmail]/All Mail")
 # Report emails are matched by sender + subject substring (confirmed values).
 REPORT_FROM = os.environ.get("ARTHEART_REPORT_FROM", "cbmorspace@aweoffice.org")
 REPORT_SUBJECT = os.environ.get("ARTHEART_REPORT_SUBJECT", "Gallery Heartbeat")

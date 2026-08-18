@@ -72,7 +72,12 @@ def fetch_and_store(store_obj: dict[str, Any], *, user: str | None = None,
     M = imaplib.IMAP4_SSL(config.IMAP_HOST)
     try:
         M.login(user, password)
-        M.select(config.IMAP_MAILBOX, readonly=True)
+        mbox = config.IMAP_MAILBOX
+        if " " in mbox and not mbox.startswith('"'):
+            mbox = f'"{mbox}"'                      # quote e.g. "[Gmail]/All Mail"
+        typ, _ = M.select(mbox, readonly=True)
+        if typ != "OK":                             # fall back to INBOX if unavailable
+            M.select("INBOX", readonly=True)
         typ, data = M.search(None, *_search_criteria())
         if typ != "OK":
             return 0

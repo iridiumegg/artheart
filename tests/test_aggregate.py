@@ -62,6 +62,19 @@ def test_intraday_series_present():
     assert [p["value"] for p in ahu2["rh_series"]] == [50.0, 44.0]
 
 
+def test_current_excursions():
+    s = store.empty_store()
+    store.add_report(s, {
+        "title": "x", "location_path": "y", "generated_at": "2026-08-15T09:00:00",
+        "parse_confidence": 1.0, "readings": [
+            {"zone": "AHU 8", "rh": 50.0, "rh_ts": None, "temp_f": 73.5},        # temp over 72
+            {"zone": "AHU 2 (Gallery 8a)", "rh": 58.0, "rh_ts": None, "temp_f": 70.0},  # rh over 55
+            {"zone": "AHU 4", "rh": 50.0, "rh_ts": None, "temp_f": 70.0},        # in band
+        ]}, "m1")
+    keys = {(e["zone"], e["metric"]) for e in aggregate.current_excursions(s)}
+    assert keys == {("AHU 8", "temp"), ("AHU 2 (Gallery 8a)", "rh")}
+
+
 def test_build_dashboard():
     s = _store_two_snapshots()
     dash = aggregate.build_dashboard(s)

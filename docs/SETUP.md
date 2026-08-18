@@ -47,6 +47,12 @@ There is **nothing to set up** beyond the App Password above: the digest is sent
 over Gmail SMTP using the same `ARTHEART_IMAP_PASSWORD`, from your Gmail account,
 to `ARTHEART_EMAIL_TO` (or yourself by default). No Resend, no custom domain.
 
+**Real-time alerts:** on top of the daily recap, an alert email fires the moment
+a gallery leaves the band (68–72 °F / 45–55 % RH), deduped to one per event
+(recovery clears it; a fresh excursion re-alerts). On by default when email is
+configured. Optional vars: `ARTHEART_ALERT_TO` (defaults to `ARTHEART_EMAIL_TO`),
+`ARTHEART_ALERTS=0` to disable.
+
 The digest sends automatically at ~6 AM Central as a recap of the previous day.
 To test off-hours, run the
 workflow manually with the repo/env variable `ARTHEART_FORCE_EMAIL=true`, or

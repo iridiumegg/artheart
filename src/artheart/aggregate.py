@@ -163,6 +163,44 @@ def build_dashboard(store: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def latest_readings(store: dict[str, Any]) -> dict[str, dict]:
+    """Most recent temp and rh reading per canonical zone across ALL data.
+
+    Returns zone -> {"temp": (value, at) | None, "rh": (value, at) | None}.
+    """
+    canon = canonical_names(store)
+    latest: dict[str, dict] = {}
+    for rep in sorted(store.get("reports", []), key=lambda r: r.get("generated_at") or ""):
+        at = rep.get("generated_at")
+        for rd in rep.get("readings", []):
+            z = _display_name(rd.get("zone", ""), canon)
+            d = latest.setdefault(z, {"temp": None, "rh": None})
+            if rd.get("temp_f") is not None:
+                d["temp"] = (rd["temp_f"], at)
+            if rd.get("rh") is not None:
+                d["rh"] = (rd["rh"], at)
+    return latest
+
+
+def current_excursions(store: dict[str, Any]) -> list[dict]:
+    """Zones whose most recent reading is out of band right now (for alerting)."""
+    out = []
+    for zone, d in latest_readings(store).items():
+        temp_band, rh_band = config.band_for_zone(zone)
+        for metric, band in (("temp", temp_band), ("rh", rh_band)):
+            cur = d.get(metric)
+            if not cur:
+                continue
+            value, at = cur
+            if value < band[0] or value > band[1]:
+                delta = round(value - band[1], 1) if value > band[1] \
+                    else round(value - band[0], 1)
+                out.append({"zone": zone, "metric": metric, "value": value,
+                            "at": at, "band_lo": band[0], "band_hi": band[1],
+                            "delta": delta})
+    return out
+
+
 def _adherence(flags: list[Optional[bool]]) -> Optional[float]:
     seen = [f for f in flags if f is not None]
     if not seen:

@@ -87,7 +87,57 @@ def run(*, do_ingest: bool = True) -> dict:
     else:
         print("email: not due" if not already_sent else "email: already sent today")
 
+    _run_alerts(data, smtp_pw)
     return summary
+
+
+def _run_alerts(data: dict, smtp_pw) -> None:
+    """Email the moment a gallery goes out of band, deduped to one per event."""
+    if not (config.ALERTS_ENABLED and smtp_pw and config.ALERT_TO):
+        return
+    current = aggregate.current_excursions(data)
+    curr_keys = {(e["zone"], e["metric"]): e for e in current}
+    active = _load_active()  # None on the very first run
+
+    if active is None:
+        # Seed the baseline without emailing, so we don't blast alerts for
+        # conditions that were already out of band before alerting existed.
+        _save_active(list(curr_keys.keys()))
+        print(f"alert: baseline seeded ({len(curr_keys)} already out of band)")
+        return
+
+    active_set = {tuple(k) for k in active}
+    new = [e for k, e in curr_keys.items() if k not in active_set]
+    _save_active(list(curr_keys.keys()))  # drop recovered, keep current
+
+    if not new:
+        print("alert: nothing new out of band")
+        return
+    try:
+        from . import email_digest
+        email_digest.send_alert(new)
+        print(f"alert: sent for {len(new)} new excursion(s)")
+    except Exception as exc:  # never let an alert failure fail the run
+        print(f"alert: skipped ({exc})")
+
+
+def _load_active():
+    if not os.path.exists(config.ALERT_STATE):
+        return None
+    try:
+        import json
+        with open(config.ALERT_STATE, encoding="utf-8") as fh:
+            return json.load(fh).get("active", [])
+    except (OSError, ValueError):
+        return []
+
+
+def _save_active(keys) -> None:
+    import json
+    os.makedirs(os.path.dirname(config.ALERT_STATE) or ".", exist_ok=True)
+    with open(config.ALERT_STATE, "w", encoding="utf-8") as fh:
+        json.dump({"active": [list(k) for k in keys]}, fh, indent=2)
+        fh.write("\n")
 
 
 def _email_marker() -> str:

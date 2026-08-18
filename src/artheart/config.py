@@ -46,6 +46,12 @@ EMAIL_TO = os.environ.get("ARTHEART_EMAIL_TO", "") or IMAP_USER      # default: 
 # Bypass the "only at SEND_HOUR" guard (for manual test runs).
 FORCE_EMAIL = os.environ.get("ARTHEART_FORCE_EMAIL", "").lower() in ("1", "true", "yes")
 
+# --- Real-time excursion alerts -----------------------------------------------
+# Email the moment a gallery leaves the band, deduped to one per event.
+ALERTS_ENABLED = os.environ.get("ARTHEART_ALERTS", "1").lower() not in ("0", "false", "no")
+ALERT_TO = os.environ.get("ARTHEART_ALERT_TO", "") or EMAIL_TO   # who gets alerts
+ALERT_STATE = os.environ.get("ARTHEART_ALERT_STATE", "data/.active_alerts.json")
+
 
 def band_for_zone(zone: str) -> tuple[tuple[float, float], tuple[float, float]]:
     """Return ((temp_lo, temp_hi), (rh_lo, rh_hi)) for a zone, honoring overrides."""

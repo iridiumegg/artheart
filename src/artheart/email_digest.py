@@ -184,29 +184,128 @@ def _plain_text(summary: dict[str, Any], dashboard_url: str) -> str:
     return "\n".join(lines)
 
 
-def send(summary: dict[str, Any], *, password: str | None = None,
-         sender: str | None = None, to: str | None = None,
-         dashboard_url: str | None = None) -> None:
-    """Send the digest over Gmail SMTP. Raises on missing config or SMTP error."""
+def _dispatch(subject: str, html: str, text: str, *, to: str | None = None,
+              password: str | None = None, sender: str | None = None) -> None:
+    """Send one multipart (plain+HTML) email over Gmail SMTP."""
     password = password or os.environ.get("ARTHEART_SMTP_PASSWORD") \
         or os.environ.get("ARTHEART_IMAP_PASSWORD", "")
     sender = sender or config.EMAIL_FROM or config.SMTP_USER
     to = to or config.EMAIL_TO or config.SMTP_USER
-    dashboard_url = dashboard_url if dashboard_url is not None else config.DASHBOARD_URL
     if not password or not config.SMTP_USER or not to:
         raise RuntimeError(
             "email needs ARTHEART_IMAP_USER, ARTHEART_IMAP_PASSWORD, ARTHEART_EMAIL_TO"
         )
-
     recipients = [a.strip() for a in to.split(",") if a.strip()]
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = build_subject(summary)
+    msg["Subject"] = subject
     msg["From"] = sender
     msg["To"] = ", ".join(recipients)
-    msg.attach(MIMEText(_plain_text(summary, dashboard_url), "plain", "utf-8"))
-    msg.attach(MIMEText(build_html(summary, dashboard_url), "html", "utf-8"))
-
+    msg.attach(MIMEText(text, "plain", "utf-8"))
+    msg.attach(MIMEText(html, "html", "utf-8"))
     with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=30) as s:
         s.starttls()
         s.login(config.SMTP_USER, password)
         s.sendmail(sender, recipients, msg.as_string())
+
+
+def send(summary: dict[str, Any], *, password: str | None = None,
+         sender: str | None = None, to: str | None = None,
+         dashboard_url: str | None = None) -> None:
+    """Send the daily digest over Gmail SMTP. Raises on missing config or SMTP error."""
+    dashboard_url = dashboard_url if dashboard_url is not None else config.DASHBOARD_URL
+    _dispatch(build_subject(summary),
+              build_html(summary, dashboard_url),
+              _plain_text(summary, dashboard_url),
+              to=to, password=password, sender=sender)
+
+
+# --- Real-time excursion alert ------------------------------------------------
+def _unit(metric: str) -> str:
+    return "°F" if metric == "temp" else "%"
+
+
+def build_alert_subject(excursions: list[dict]) -> str:
+    if len(excursions) == 1:
+        e = excursions[0]
+        return (f"Gallery excursion — {e['zone']} "
+                f"{e['metric'].upper()} {e['value']}{_unit(e['metric'])}")
+    return f"{len(excursions)} gallery excursions — CBMAA"
+
+
+def _alert_plain(excursions: list[dict], dashboard_url: str) -> str:
+    lines = ["Galleries out of band:", ""]
+    for e in excursions:
+        u = _unit(e["metric"])
+        side = "over" if e["value"] > e["band_hi"] else "under"
+        lines.append(f"! {e['zone']} — {e['metric'].upper()} {e['value']}{u} "
+                     f"({abs(e['delta'])}{u} {side} {e['band_lo']}-{e['band_hi']}{u})"
+                     + (f" at {e['at'].replace('T',' ')}" if e.get('at') else ""))
+    if dashboard_url:
+        lines += ["", f"Dashboard: {dashboard_url}"]
+    return "\n".join(lines)
+
+
+def build_alert_html(excursions: list[dict], dashboard_url: str = "") -> str:
+    cards = ""
+    for e in excursions:
+        u = _unit(e["metric"])
+        side = "over" if e["value"] > e["band_hi"] else "under"
+        cards += (
+            f'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+            f'style="margin:8px 0"><tr><td bgcolor="#2a1416" '
+            f'style="background:#2a1416;border:1px solid #4a2326;border-radius:10px;padding:14px">'
+            f'<table role="presentation" width="100%"><tr>'
+            f'<td style="font-family:Consolas,monospace;color:#fca5a5;font-size:14px;font-weight:bold">'
+            f'{e["zone"]}<div style="color:{_SEC};font-weight:normal;font-size:12px;padding-top:3px">'
+            f'{e["metric"].upper()}'
+            f'{(" · " + e["at"].replace("T"," ")) if e.get("at") else ""}</div></td>'
+            f'<td align="right" style="font-family:Consolas,monospace">'
+            f'<div style="color:{_BAD};font-size:22px;font-weight:bold">{e["value"]}{u}</div>'
+            f'<div style="color:#f3b0b0;font-size:11px">{abs(e["delta"])}{u} {side} '
+            f'{e["band_lo"]}–{e["band_hi"]}{u}</div></td>'
+            f'</tr></table></td></tr></table>'
+        )
+    button = ""
+    if dashboard_url:
+        button = (
+            f'<table role="presentation" cellspacing="0" cellpadding="0" style="margin:8px auto">'
+            f'<tr><td bgcolor="{_TEAL}" style="background:{_TEAL};border-radius:8px">'
+            f'<a href="{dashboard_url}" style="display:inline-block;padding:12px 28px;color:#04201c;'
+            f'text-decoration:none;font-weight:700;font-family:Arial,Helvetica,sans-serif;font-size:14px">'
+            f'View dashboard &rarr;</a></td></tr></table>'
+        )
+    heading = ("A gallery has left its condition band"
+               if len(excursions) == 1 else
+               f"{len(excursions)} galleries have left their condition band")
+    return f"""<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="color-scheme" content="dark">
+<style>:root{{color-scheme:dark;}} body{{margin:0;background:{_BG};}}</style></head>
+<body bgcolor="{_BG}" style="margin:0;background:{_BG}">
+<table role="presentation" width="100%" bgcolor="{_BG}" cellspacing="0" cellpadding="0" style="background:{_BG}">
+<tr><td align="center" style="padding:24px 16px">
+  <table role="presentation" width="600" bgcolor="{_CARD}" cellspacing="0" cellpadding="0"
+         style="max-width:600px;width:100%;background:{_CARD};border:1px solid {_LINE};border-radius:12px">
+    <tr><td style="padding:20px 22px 6px">
+      <div style="font-size:24px;font-weight:800;color:{_INK};font-family:Arial,Helvetica,sans-serif">
+        art<span style="color:{_TEAL}">heart</span></div>
+      <div style="color:{_BAD};font-family:Consolas,monospace;font-size:13px;padding-top:4px">
+        &#9888; Real-time condition alert</div>
+      <div style="color:{_SEC};font-family:Arial,Helvetica,sans-serif;font-size:13px;padding-top:6px">
+        {heading} (68–72 °F · 45–55 % RH).</div>
+    </td></tr>
+    <tr><td style="padding:6px 18px 4px">{cards}</td></tr>
+    <tr><td style="padding:10px 22px 6px">{button}</td></tr>
+    <tr><td style="padding:12px 22px 22px;color:{_MUTED};font-family:Consolas,monospace;font-size:11px;text-align:center">
+      artheart · one alert per excursion, plus the 6 AM recap</td></tr>
+  </table>
+</td></tr></table></body></html>"""
+
+
+def send_alert(excursions: list[dict], *, dashboard_url: str | None = None,
+               to: str | None = None) -> None:
+    """Send a real-time excursion alert over Gmail SMTP."""
+    dashboard_url = dashboard_url if dashboard_url is not None else config.DASHBOARD_URL
+    _dispatch(build_alert_subject(excursions),
+              build_alert_html(excursions, dashboard_url),
+              _alert_plain(excursions, dashboard_url),
+              to=to or config.ALERT_TO)

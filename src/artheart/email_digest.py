@@ -294,9 +294,7 @@ def build_alert_html(excursions: list[dict], dashboard_url: str = "") -> str:
         {heading} (68–72 °F · 45–55 % RH).</div>
     </td></tr>
     <tr><td style="padding:6px 18px 4px">{cards}</td></tr>
-    <tr><td style="padding:10px 22px 6px">{button}</td></tr>
-    <tr><td style="padding:12px 22px 22px;color:{_MUTED};font-family:Consolas,monospace;font-size:11px;text-align:center">
-      artheart · one alert per excursion, plus the 6 AM recap</td></tr>
+    <tr><td style="padding:10px 22px 22px">{button}</td></tr>
   </table>
 </td></tr></table></body></html>"""
 

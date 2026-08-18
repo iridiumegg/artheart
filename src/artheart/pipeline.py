@@ -35,10 +35,11 @@ def run(*, do_ingest: bool = True) -> dict:
     if do_ingest and config.IMAP_USER and os.environ.get("ARTHEART_IMAP_PASSWORD"):
         try:
             from . import ingest
-            added = ingest.fetch_and_store(data)
+            added = ingest.fetch_and_store(data, reprocess=config.REINGEST)
             if added:
                 store.save_store(config.DATA_FILE, data)
-            print(f"ingest: added {added} new report(s)")
+            print(f"ingest: {'re-parsed' if config.REINGEST else 'added'} "
+                  f"{added} report(s)")
         except Exception as exc:  # transient IMAP hiccup must not fail the poll
             print(f"ingest: error, keeping existing data ({exc})")
     else:

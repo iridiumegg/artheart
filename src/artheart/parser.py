@@ -61,6 +61,15 @@ def _parse_float(raw: Optional[str]) -> Optional[float]:
     return float(raw) if _FLOAT_RE.match(raw) else None
 
 
+def _parse_humidity(cell: Optional[str]):
+    """Humidity cell, either 'value @ timestamp' (old) or a bare number (new)."""
+    cell = (cell or "").strip()
+    m = _HUMIDITY_RE.match(cell)
+    if m:
+        return float(m.group(1)), _parse_ts(m.group(2))
+    return _parse_float(cell), None
+
+
 def parse_report(path: str) -> Report:
     """Parse a WebCTRL gallery-condition PDF into a structured Report."""
     report = Report()
@@ -99,11 +108,7 @@ def parse_report(path: str) -> Report:
             if not row or not (row[0] or "").strip():
                 continue
             zone = row[0].strip()          # keep the report's label verbatim
-            rh, rh_ts = None, None
-            hm = _HUMIDITY_RE.match((row[1] or "").strip()) if len(row) > 1 else None
-            if hm:
-                rh = float(hm.group(1))
-                rh_ts = _parse_ts(hm.group(2))
+            rh, rh_ts = _parse_humidity(row[1] if len(row) > 1 else None)
             temp_f = _parse_float(row[2] if len(row) > 2 else None)
             if temp_f is None and (len(row) < 3 or not (row[2] or "").strip()):
                 report.warnings.append(f"{zone}: missing zone temp")

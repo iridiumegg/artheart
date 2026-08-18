@@ -29,6 +29,8 @@ REPORT_FROM = os.environ.get("ARTHEART_REPORT_FROM", "cbmorspace@aweoffice.org")
 REPORT_SUBJECT = os.environ.get("ARTHEART_REPORT_SUBJECT", "Gallery Heartbeat")
 # Optional lookback bound; 0 = search all matching mail (dedup prevents rework).
 IMAP_SINCE_DAYS = int(os.environ.get("ARTHEART_IMAP_SINCE_DAYS", "0"))
+# Re-parse already-stored reports (backfill after a parser change).
+REINGEST = os.environ.get("ARTHEART_REINGEST", "").lower() in ("1", "true", "yes")
 
 # --- Paths --------------------------------------------------------------------
 DATA_FILE = os.environ.get("ARTHEART_DATA_FILE", "data/readings.json")

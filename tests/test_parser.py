@@ -2,7 +2,19 @@
 import os
 from datetime import datetime
 
-from artheart.parser import parse_report, find_excursions
+from artheart.parser import parse_report, find_excursions, _parse_humidity
+from datetime import datetime as _dt
+
+
+def test_parse_humidity_both_formats():
+    # old format: value @ timestamp
+    rh, ts = _parse_humidity("53.8 @ 08/10/2026 09:14:55 AM")
+    assert rh == 53.8 and ts == _dt(2026, 8, 10, 9, 14, 55)
+    # new format: bare number, no timestamp
+    rh, ts = _parse_humidity("51.0")
+    assert rh == 51.0 and ts is None
+    # blank
+    assert _parse_humidity("") == (None, None)
 
 SAMPLE = os.path.join(os.path.dirname(__file__), "samples", "CBMAA_Gallery_2_sample.pdf")
 

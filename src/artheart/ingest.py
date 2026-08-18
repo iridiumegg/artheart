@@ -54,7 +54,7 @@ def _pdf_attachments(msg: email.message.Message):
 
 
 def fetch_and_store(store_obj: dict[str, Any], *, user: str | None = None,
-                    password: str | None = None) -> int:
+                    password: str | None = None, reprocess: bool = False) -> int:
     """Pull matching report emails, parse their PDFs, add to the store.
 
     Returns the number of newly added reports.
@@ -88,7 +88,7 @@ def fetch_and_store(store_obj: dict[str, Any], *, user: str | None = None,
                 continue
             msg_id = _decode(email.message_from_bytes(hdr[0][1]).get("Message-ID")) \
                 or num.decode()
-            if has_report(store_obj, msg_id):
+            if has_report(store_obj, msg_id) and not reprocess:
                 continue
             typ, raw = M.fetch(num, "(RFC822)")
             if typ != "OK" or not raw or not raw[0]:
@@ -99,7 +99,7 @@ def fetch_and_store(store_obj: dict[str, Any], *, user: str | None = None,
                     tf.write(pdf_bytes)
                     tf.flush()
                     report = parse_report(tf.name)
-                if add_report(store_obj, report.as_dict(), msg_id):
+                if add_report(store_obj, report.as_dict(), msg_id, replace=reprocess):
                     added += 1
     finally:
         try:

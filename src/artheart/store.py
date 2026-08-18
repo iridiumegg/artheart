@@ -38,17 +38,24 @@ def has_report(store: dict[str, Any], gmail_msg_id: str) -> bool:
 
 
 def add_report(store: dict[str, Any], report_dict: dict[str, Any],
-               gmail_msg_id: str) -> bool:
-    """Append a parsed report. Returns False if this message was already stored.
+               gmail_msg_id: str, *, replace: bool = False) -> bool:
+    """Append a parsed report. Returns False if already stored (unless replace).
 
-    Drops person-identifying fields and renames title -> gallery_title.
+    Drops person-identifying fields and renames title -> gallery_title. With
+    replace=True, an existing report with the same message id is re-parsed in
+    place (used to backfill after a parser fix).
     """
-    if has_report(store, gmail_msg_id):
+    existing = has_report(store, gmail_msg_id)
+    if existing and not replace:
         return False
     clean = {k: v for k, v in report_dict.items() if k not in _DROP_KEYS}
     clean["gallery_title"] = clean.pop("title", None)
     clean["gmail_msg_id"] = gmail_msg_id
-    store["reports"].append(clean)
+    if existing:
+        store["reports"] = [clean if r.get("gmail_msg_id") == gmail_msg_id else r
+                            for r in store["reports"]]
+    else:
+        store["reports"].append(clean)
     # Keep chronological by generation time when available.
     store["reports"].sort(key=lambda r: r.get("generated_at") or "")
     return True

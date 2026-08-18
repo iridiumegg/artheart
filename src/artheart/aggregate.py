@@ -154,7 +154,7 @@ def build_dashboard(store: dict[str, Any]) -> dict[str, Any]:
     """Everything the static dashboard renders: facility, bands, all daily rollups."""
     dates = all_dates(store)
     return {
-        "facility": facility_of(store),
+        "facility": config.FACILITY or facility_of(store),
         "temp_band": list(config.DEFAULT_TEMP_BAND),
         "rh_band": list(config.DEFAULT_RH_BAND),
         "dates": dates,

@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 
 # --- Scheduling ---------------------------------------------------------------
+FACILITY = os.environ.get("ARTHEART_FACILITY", "Crystal Bridges Museum")
 TIMEZONE = os.environ.get("ARTHEART_TZ", "America/Chicago")
 # Local hour to email the daily digest. Sent at 6am as a recap of the previous
 # day (reports arrive 7am–9pm, so by morning the prior day is complete). The

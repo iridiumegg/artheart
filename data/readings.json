@@ -3336,6 +3336,63 @@
       "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<2108886881.298.1787302821213@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-08-21T06:00:12",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 52.0,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": 52.0,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 46.0,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 46.8,
+          "rh_ts": null,
+          "temp_f": 70.1
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 47.9,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 46.0,
+          "rh_ts": null,
+          "temp_f": 72.3
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 50.3,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 50.9,
+          "rh_ts": null,
+          "temp_f": 68.8
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<1307579655.300.1787310014295@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

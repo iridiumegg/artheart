@@ -3,6 +3,14 @@
     [
       "AHU 8",
       "temp"
+    ],
+    [
+      "AHU 14 (5 Bridge S)",
+      "rh"
+    ],
+    [
+      "ERU-A9-2",
+      "rh"
     ]
   ]
 }

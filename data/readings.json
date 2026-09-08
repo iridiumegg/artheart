@@ -15633,6 +15633,87 @@
       "parse_confidence": 0.98,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<187450939.1034.1788829213494@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-09-08T00:00:31",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 52.0,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 45.2,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 44.7,
+          "rh_ts": null,
+          "temp_f": 70.8
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 48.0,
+          "rh_ts": null,
+          "temp_f": 70.1
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 50.3,
+          "rh_ts": null,
+          "temp_f": 71.7
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 50.7,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 50.7,
+          "rh_ts": null,
+          "temp_f": 70.3
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 53.2,
+          "rh_ts": null,
+          "temp_f": 69.8
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 50.5,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 51.7,
+          "rh_ts": null,
+          "temp_f": 70.6
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 70.8
+        }
+      ],
+      "parse_confidence": 0.98,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<945248257.1036.1788843632571@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

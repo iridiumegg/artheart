@@ -15957,6 +15957,168 @@
       "parse_confidence": 0.98,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<322259478.1042.1788865217485@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-09-08T08:00:14",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.0
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 46.2,
+          "rh_ts": null,
+          "temp_f": 70.3
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 47.8,
+          "rh_ts": null,
+          "temp_f": 70.2
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 48.3,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 47.9,
+          "rh_ts": null,
+          "temp_f": 71.4
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 49.9,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 49.9,
+          "rh_ts": null,
+          "temp_f": 69.0
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 50.3,
+          "rh_ts": null,
+          "temp_f": 70.1
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 51.3,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 70.3
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 70.9
+        }
+      ],
+      "parse_confidence": 0.98,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<298555288.1050.1788872414845@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-09-08T10:00:05",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 52.0,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": null,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 45.6,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 49.6,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 49.2,
+          "rh_ts": null,
+          "temp_f": 69.8
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 47.3,
+          "rh_ts": null,
+          "temp_f": 70.9
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 49.5,
+          "rh_ts": null,
+          "temp_f": 69.8
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 49.9,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 50.5,
+          "rh_ts": null,
+          "temp_f": 69.4
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 51.1,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 52.1,
+          "rh_ts": null,
+          "temp_f": 70.2
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 70.9
+        }
+      ],
+      "parse_confidence": 0.98,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<345108612.1054.1788879606076@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

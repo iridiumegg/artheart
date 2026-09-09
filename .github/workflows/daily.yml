@@ -12,11 +12,17 @@ on:
         type: boolean
         default: false
   schedule:
-    # Poll the inbox every ~15 min so the dashboard updates shortly after each
-    # report email arrives. Runs are cheap and no-op unless a new report is
-    # found; the dashboard is redeployed only when the data actually changes.
-    # (GitHub may space scheduled runs out under load — 15 min is a floor.)
-    - cron: "*/15 * * * *"
+    # Poll the inbox often so the dashboard updates shortly after each report
+    # email arrives. Runs are cheap and no-op unless a new report is found; the
+    # dashboard is redeployed only when the data actually changes.
+    #
+    # GitHub's scheduler is best-effort: it delays or drops scheduled runs under
+    # load, and congestion is worst at the top of the hour and the quarter marks
+    # (:00 :15 :30 :45). So we deliberately fire every 5 min at OFF-peak minutes
+    # (never on those marks) to maximise the chance GitHub grants a run promptly.
+    # Whenever a run does fire it catches up on every email missed since the last
+    # one, so a skipped slot only delays the update — it never loses a report.
+    - cron: "3,8,13,18,23,28,33,38,43,48,53,58 * * * *"
 
 permissions:
   contents: write                # commit updated data/readings.json

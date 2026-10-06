@@ -41934,6 +41934,285 @@
       "parse_confidence": 1.0,
       "gallery_title": "CBMAA Gallery",
       "gmail_msg_id": "<1021425826.86.1791291621418@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-10-06T10:00:07",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 50.0,
+          "rh_ts": null,
+          "temp_f": 71.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 50.7,
+          "rh_ts": null,
+          "temp_f": 70.1
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 49.8,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 53.0,
+          "rh_ts": null,
+          "temp_f": 70.1
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 51.1,
+          "rh_ts": null,
+          "temp_f": 71.3
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 50.8,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 50.7,
+          "rh_ts": null,
+          "temp_f": 70.8
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 50.9,
+          "rh_ts": null,
+          "temp_f": 69.8
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 52.1,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 50.9,
+          "rh_ts": null,
+          "temp_f": 71.1
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 50.0,
+          "rh_ts": null,
+          "temp_f": 69.1
+        },
+        {
+          "zone": "Crac 5A (S Temp Exhibit)",
+          "rh": 51.9,
+          "rh_ts": null,
+          "temp_f": 70.6
+        },
+        {
+          "zone": "Crac 5B (S Temp Exhibit)",
+          "rh": 52.4,
+          "rh_ts": null,
+          "temp_f": 69.3
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<794517292.93.1791298808732@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-10-06T12:00:10",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 50.0,
+          "rh_ts": null,
+          "temp_f": 70.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 68.9
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 50.9,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 46.4,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 50.5,
+          "rh_ts": null,
+          "temp_f": 70.6
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 50.5,
+          "rh_ts": null,
+          "temp_f": 71.6
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 50.9,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 50.8,
+          "rh_ts": null,
+          "temp_f": 71.0
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 51.1,
+          "rh_ts": null,
+          "temp_f": 70.0
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 50.0,
+          "rh_ts": null,
+          "temp_f": 69.8
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 50.5,
+          "rh_ts": null,
+          "temp_f": 70.9
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 50.0,
+          "rh_ts": null,
+          "temp_f": 69.1
+        },
+        {
+          "zone": "Crac 5A (S Temp Exhibit)",
+          "rh": 53.4,
+          "rh_ts": null,
+          "temp_f": 70.7
+        },
+        {
+          "zone": "Crac 5B (S Temp Exhibit)",
+          "rh": 52.4,
+          "rh_ts": null,
+          "temp_f": 69.3
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<631779999.96.1791306012331@WebCTRL.nwacc.arvest.com>"
+    },
+    {
+      "location_path": "Crystal Bridges Museum / CBMAA Main / LVL 4 Mech Room / AHU-22 (Loading Dock)",
+      "generated_at": "2026-10-06T14:00:34",
+      "readings": [
+        {
+          "zone": "AHU 2 (Gallery 8a)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 70.5
+        },
+        {
+          "zone": "AHU 4 (Vault)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 13 (Gallery 3/4)",
+          "rh": 49.4,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "AHU 14 (5 Bridge S)",
+          "rh": 45.4,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 15 (Gallery 5 East Box)",
+          "rh": 51.0,
+          "rh_ts": null,
+          "temp_f": 69.9
+        },
+        {
+          "zone": "AHU 19 (Gallery 6 S)",
+          "rh": 48.6,
+          "rh_ts": null,
+          "temp_f": 71.2
+        },
+        {
+          "zone": "AHU-18 (Gallery 6 N)",
+          "rh": 50.4,
+          "rh_ts": null,
+          "temp_f": 69.3
+        },
+        {
+          "zone": "AHU 11 (Gallery 2)",
+          "rh": 49.4,
+          "rh_ts": null,
+          "temp_f": 71.2
+        },
+        {
+          "zone": "ERU A7-1",
+          "rh": 50.6,
+          "rh_ts": null,
+          "temp_f": 69.2
+        },
+        {
+          "zone": "ERU A7-2",
+          "rh": 50.2,
+          "rh_ts": null,
+          "temp_f": 69.5
+        },
+        {
+          "zone": "ERU-A9-2",
+          "rh": 49.8,
+          "rh_ts": null,
+          "temp_f": 71.1
+        },
+        {
+          "zone": "AHU A8-1",
+          "rh": 49.0,
+          "rh_ts": null,
+          "temp_f": 69.0
+        },
+        {
+          "zone": "Crac 5A (S Temp Exhibit)",
+          "rh": 51.1,
+          "rh_ts": null,
+          "temp_f": 71.0
+        },
+        {
+          "zone": "Crac 5B (S Temp Exhibit)",
+          "rh": 51.6,
+          "rh_ts": null,
+          "temp_f": 69.7
+        }
+      ],
+      "parse_confidence": 1.0,
+      "gallery_title": "CBMAA Gallery",
+      "gmail_msg_id": "<759439225.102.1791313235073@WebCTRL.nwacc.arvest.com>"
     }
   ]
 }

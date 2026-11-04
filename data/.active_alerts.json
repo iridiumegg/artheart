@@ -3,6 +3,22 @@
     [
       "AHU 8",
       "temp"
+    ],
+    [
+      "AHU 14 (5 Bridge S)",
+      "rh"
+    ],
+    [
+      "Minimum",
+      "rh"
+    ],
+    [
+      "Std Dev",
+      "temp"
+    ],
+    [
+      "Std Dev",
+      "rh"
     ]
   ]
 }

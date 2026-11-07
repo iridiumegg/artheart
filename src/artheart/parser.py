@@ -17,6 +17,10 @@ import pdfplumber
 
 # "53.8 @ 08/10/2026 09:14:55 AM"
 _HUMIDITY_RE = re.compile(r"^\s*([\d.]+)\s*@\s*(.+?)\s*$")
+# WebCTRL appends a column-statistics block after the data rows (Maximum,
+# Minimum, Average, Std Dev). Those are aggregates of the columns, not zones,
+# so they must not be ingested as readings.
+_SUMMARY_ZONES = {"maximum", "minimum", "average", "std dev", "stddev"}
 # footer: "ES2 - Nate Stewart (nstewart) 08/10/2026 11:00:20 AM Page 1 of 1"
 _FOOTER_RE = re.compile(r"^(.*?\))\s+(\d{2}/\d{2}/\d{4}\s+[\d:]+\s+[AP]M)")
 _FLOAT_RE = re.compile(r"^[\d.]+$")
@@ -59,6 +63,12 @@ def _parse_ts(raw: str) -> Optional[datetime]:
 def _parse_float(raw: Optional[str]) -> Optional[float]:
     raw = (raw or "").strip()
     return float(raw) if _FLOAT_RE.match(raw) else None
+
+
+def _is_summary_zone(zone: str) -> bool:
+    """True for the report's trailing stat rows (Maximum/Minimum/Average/Std Dev)."""
+    key = re.sub(r"[.\s]+", " ", (zone or "").strip().lower()).strip()
+    return key in _SUMMARY_ZONES
 
 
 def _parse_humidity(cell: Optional[str]):
@@ -108,6 +118,8 @@ def parse_report(path: str) -> Report:
             if not row or not (row[0] or "").strip():
                 continue
             zone = row[0].strip()          # keep the report's label verbatim
+            if _is_summary_zone(zone):     # skip the column-statistics block
+                continue
             rh, rh_ts = _parse_humidity(row[1] if len(row) > 1 else None)
             temp_f = _parse_float(row[2] if len(row) > 2 else None)
             if temp_f is None and (len(row) < 3 or not (row[2] or "").strip()):

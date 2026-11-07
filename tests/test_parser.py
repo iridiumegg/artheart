@@ -2,8 +2,17 @@
 import os
 from datetime import datetime
 
-from artheart.parser import parse_report, find_excursions, _parse_humidity
+from artheart.parser import parse_report, find_excursions, _parse_humidity, _is_summary_zone
 from datetime import datetime as _dt
+
+
+def test_summary_rows_are_not_zones():
+    # WebCTRL appends a column-statistics block; these must not be ingested.
+    for label in ("Maximum", "Minimum", "Average", "Std Dev", "Std. Dev.", "STDDEV"):
+        assert _is_summary_zone(label), label
+    # Real units (including stat-like words inside a longer name) are kept.
+    for label in ("AHU 8", "ERU A7-2", "Crac 5A (S Temp Exhibit)", ""):
+        assert not _is_summary_zone(label), label
 
 
 def test_parse_humidity_both_formats():

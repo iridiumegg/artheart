@@ -3,14 +3,6 @@
     [
       "AHU 8",
       "temp"
-    ],
-    [
-      "Std Dev",
-      "temp"
-    ],
-    [
-      "Std Dev",
-      "rh"
     ]
   ]
 }
